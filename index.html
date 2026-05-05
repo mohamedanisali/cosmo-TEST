@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmo Pro | د. محمد أنيس</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<!-- ===== LOADING INDICATOR (يظهر لو التحميل أبطأ من 1.5 ثانية) ===== -->
+<div id="cosmo-loading-indicator" class="loading-indicator">
+  <span class="spin-inline">⏳</span>
+  جاري تحميل بيانات المنتجات...
+</div>
+<style>
+  @keyframes cosmo-spin { to { transform: rotate(360deg); } }
+</style>
+
+<!-- ===== PASSWORD SCREEN ===== -->
+<div id="password-screen" class="pw-screen">
+  <div class="pw-screen-box">
+    <div class="icon-xxlg">🌸</div>
+    <div class="pw-title">Cosmo Pro</div>
+    <div class="pw-subtitle">د. محمد أنيس — الدليل الاحترافي الشامل</div>
+
+    <input id="pw-input" type="password" class="pw-input"
+           placeholder="أدخل كلمة المرور"
+           onkeydown="if(event.key==='Enter')checkPassword()">
+
+    <div id="pw-error" class="pw-error">❌ كلمة المرور غلط</div>
+
+    <button onclick="checkPassword()" class="pw-btn">دخول</button>
+
+    <div class="pw-lock-hint">🔒 محمي بكلمة مرور</div>
+  </div>
+</div>
+
+
+<!-- إشعار الصلاة على النبي -->
+<div id="salah-toast" class="salah-toast">
+  🌙 صلِّ على النبي ﷺ — اللهم صلِّ وسلم عليه
+</div>
+
+
+<!-- SIDEBAR -->
+<button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" aria-label="فتح القائمة">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div class="sidebar" id="mainSidebar">
+  <div class="sidebar-logo">
+    <div class="logo-img-wrap">
+      <img src="data:image/jpeg;base64,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" alt="M3A Logo">
+    </div>
+    <h1>Cosmo Pro</h1>
+    <div class="owner-name">د. محمد أنيس</div>
+    <p>الدليل الاحترافي الشامل</p>
+  </div>
+
+  <div class="nav-section-title">المنتجات</div>
+  <div class="nav-item" onclick="toggleSkinCare()" id="skincare-toggle">
+    <span class="icon">🌿</span> العناية بالبشرة
+    <span id="skincare-arrow" class="nav-arrow">▼</span>
+  </div>
+  <div id="skincare-menu" class="nav-menu-hidden">
+    <div class="nav-item nav-sub" onclick="navigate('prod_cleansers')">
+      <span class="icon">🧴</span> غسولات البشرة
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('recommender')">
+      <span class="icon">🎯</span> مرشح الغسولات الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_toners')">
+      <span class="icon">💦</span> التونر
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('toner_rec')">
+      <span class="icon">🎯</span> مرشح التونر الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_moisturizers')">
+      <span class="icon">🫧</span> المرطبات
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('moist_rec')">
+      <span class="icon">🎯</span> مرشح المرطبات الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_masks')">
+      <span class="icon">🎭</span> ماسكات البشرة
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('masks_rec')">
+      <span class="icon">🎯</span> مرشح الماسكات الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_scrubs')">
+      <span class="icon">✨</span> مقشرات البشرة
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('scrubs_rec')">
+      <span class="icon">🎯</span> مرشح المقشرات الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_sunscreen')">
+      <span class="icon">☀️</span> واقيات الشمس
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_acne')">
+      <span class="icon">💊</span> علاج الحبوب
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('acne_rec')">
+      <span class="icon">🎯</span> مرشح الحبوب الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_whitening')">
+      <span class="icon">🌸</span> التفتيح
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('whitening_rec')">
+      <span class="icon">🎯</span> مرشح التفتيح الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_eye')">
+      <span class="icon">👁️</span> محيط العين
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('eye_rec')">
+      <span class="icon">🎯</span> مرشح محيط العين الذكي
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_wrinkles')">
+      <span class="icon">✨</span> Anti-Aging
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('antiaging_rec')">
+      <span class="icon">🎯</span> مرشح Anti-Aging الذكي
+    </div>
+  </div>
+
+  <div class="nav-section-title">العناية بالشعر</div>
+  <div class="nav-item" onclick="toggleHairCare()" id="haircare-toggle">
+    <span class="icon">💇</span> العناية بالشعر
+    <span id="haircare-arrow" class="nav-arrow">▼</span>
+  </div>
+  <div id="haircare-menu" class="nav-menu-hidden">
+    <div class="nav-item nav-sub" onclick="navigate('prod_hair')">
+      <span class="icon">🧴</span> منتجات الشعر
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('prod_dyes')">
+      <span class="icon">🎨</span> الصبغات
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('dyes_rec')">
+      <span class="icon">🎯</span> مرشح الصبغات الذكي
+    </div>
+  </div>
+  <div class="nav-menu-hidden">
+    <div class="nav-item nav-sub" onclick="navigate('prod_special')">
+      <span class="icon">✨</span> منتجات خاصة
+    </div>
+  </div>
+
+  <div class="nav-section-title">المكتبة</div>
+  <div class="nav-item" onclick="toggleLibrary()" id="library-toggle">
+    <span class="icon">📚</span> المكتبة التعليمية
+    <span id="library-arrow" class="nav-arrow">▼</span>
+  </div>
+  <div id="library-menu" class="nav-menu-hidden">
+    <div class="nav-section-title nav-sub">العملاء</div>
+    <div class="nav-item nav-sub" onclick="navigate('personality')">
+      <span class="icon">🧠</span> أنواع الشخصيات
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('questions')">
+      <span class="icon">💬</span> أسئلة ذكية
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('fab')">
+      <span class="icon">🎯</span> نموذج FAB
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('forbidden')">
+      <span class="icon">🚫</span> المحظورات
+    </div>
+    <div class="nav-section-title nav-sub">العناية بالبشرة</div>
+    <div class="nav-item nav-sub" onclick="navigate('diag')">
+      <span class="icon">🔍</span> تشخيص البشرة
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('skinroutine')">
+      <span class="icon">✨</span> روتين البشرة
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('sunscreen')">
+      <span class="icon">☀️</span> واقي الشمس
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('problems')">
+      <span class="icon">⚕️</span> مشاكل البشرة
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('acne')">
+      <span class="icon">💊</span> الحبوب وحب الشباب
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('whitening')">
+      <span class="icon">🌸</span> التفتيح
+    </div>
+    <div class="nav-section-title nav-sub">العناية بالشعر</div>
+    <div class="nav-item nav-sub" onclick="navigate('haircare')">
+      <span class="icon">💇</span> أنواع الشعر
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('hairloss')">
+      <span class="icon">🌿</span> تساقط الشعر
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('dandruff')">
+      <span class="icon">❄️</span> القشرة
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('keratin')">
+      <span class="icon">💎</span> الكيراتين والبروتين
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('hair_dyes_edu')">
+      <span class="icon">🎨</span> الصبغات — دليل شامل
+    </div>
+    <div class="nav-section-title nav-sub">صحة البشرة</div>
+    <div class="nav-item nav-sub" onclick="navigate('vitamins')">
+      <span class="icon">💊</span> الفيتامينات
+    </div>
+    <div class="nav-item nav-sub" onclick="navigate('lifestyle')">
+      <span class="icon">🌱</span> نمط الحياة
+    </div>
+  </div>
+
+  <div class="nav-section-title">الفريق</div>
+  <div class="nav-item" onclick="navigate('offers_calc')">
+    <span class="icon">🏷️</span> حاسبة العروض
+  </div>
+  <div class="nav-item" onclick="navigate('training')">
+    <span class="icon">🎓</span> التدريب التفاعلي
+  </div>
+  <div class="nav-item" onclick="navigate('comparison')">
+    <span class="icon">⚖️</span> مقارنة المنتجات
+  </div>
+  <div class="nav-item" onclick="navigate('team_notes')">
+    <span class="icon">💬</span> ملاحظات الفريق
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title" id="topbarTitle">أنواع الشخصيات</span>
+    <span class="topbar-badge">د. محمد أنيس — Cosmo Pro</span>
+  </div>
+
+  <!-- ===== DASHBOARD ===== -->
+  <!-- ===== PERSONALITY ===== -->
+  <div class="section active" id="personality">
+    <div class="section-header">
+      <h2>🧠 أنواع الشخصيات</h2>
+      <p>عند فهم شخصية العميل ستعرف الطريقة الصحيحة للتعامل معه</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="personality-grid">
+      <div class="persona-card driver">
+        <div class="persona-header">
+          <div class="persona-icon">🚀</div>
+          <div>
+            <div class="persona-name persona-rose">Driver — القائد</div>
+            <div class="persona-type">Get It Done</div>
+          </div>
+        </div>
+        <p><strong>صفاته:</strong> محدد، يعرف ماذا يريد، يتواصل بسرعة، يريد النتائج، عملي وواضح.</p>
+        <p><strong>نقطة ضعفه:</strong> لا يستمع كثيراً.</p>
+        <p><strong>كيف تتعامل معه:</strong></p>
+        <p>● كن سريعاً ومباشراً ولا تُطيل في الكلام</p>
+        <p>● قدم الحل والنتيجة مباشرة</p>
+        <p>● تجنب التفاصيل الكثيرة ما لم يطلبها</p>
+        <div class="mt-10">
+          <span class="trait-tag">مباشر</span>
+          <span class="trait-tag">سريع القرار</span>
+          <span class="trait-tag">عملي</span>
+          <span class="trait-tag">واضح</span>
+        </div>
+      </div>
+
+      <div class="persona-card analytical">
+        <div class="persona-header">
+          <div class="persona-icon">🔬</div>
+          <div>
+            <div class="persona-name persona-blue">Analytical — التحليلي</div>
+            <div class="persona-type">Get It Right</div>
+          </div>
+        </div>
+        <p><strong>صفاته:</strong> تحليلي، دقيق، يحب التفاصيل والحقائق.</p>
+        <p><strong>نقطة ضعفه:</strong> لا يأخذ قراراً حتى تكون كل الحقائق والتفاصيل كاملة. لا يمكن فرض شيء عليه.</p>
+        <p><strong>كيف تتعامل معه:</strong></p>
+        <p>● قدم بيانات وحقائق وأرقام</p>
+        <p>● كن صبوراً واستعد لأسئلة كثيرة</p>
+        <p>● لا تضغط عليه لاتخاذ قرار سريع</p>
+        <div class="mt-10">
+          <span class="trait-tag">يحب التفاصيل</span>
+          <span class="trait-tag">حقائق وأرقام</span>
+          <span class="trait-tag">دقيق</span>
+        </div>
+      </div>
+
+      <div class="persona-card amiable">
+        <div class="persona-header">
+          <div class="persona-icon">🤝</div>
+          <div>
+            <div class="persona-name persona-green">Amiable — الودود</div>
+            <div class="persona-type">Get Along</div>
+          </div>
+        </div>
+        <p><strong>صفاته:</strong> ودود، يحب الكلام، حساس، هادئ وسهل في التعامل.</p>
+        <p><strong>نقطة ضعفه:</strong> لا يستطيع اتخاذ قرار سريع.</p>
+        <p><strong>كيف تتعامل معه:</strong></p>
+        <p>● ابنِ علاقة شخصية أولاً</p>
+        <p>● كن لطيفاً وصبوراً وامنحه وقتاً</p>
+        <p>● ساعده على اتخاذ القرار بلطف</p>
+        <div class="mt-10">
+          <span class="trait-tag">ودود</span>
+          <span class="trait-tag">علاقات</span>
+          <span class="trait-tag">صبور</span>
+        </div>
+      </div>
+
+      <div class="persona-card expressive">
+        <div class="persona-header">
+          <div class="persona-icon">🌟</div>
+          <div>
+            <div class="persona-name persona-gold">Expressive — المعبّر</div>
+            <div class="persona-type">Get Appreciated</div>
+          </div>
+        </div>
+        <p><strong>صفاته:</strong> ينبهر بأي فكرة جديدة أو شيء غير مألوف، انفعالي.</p>
+        <p><strong>نقطة ضعفه:</strong> مندفع.</p>
+        <p><strong>كيف تتعامل معه:</strong></p>
+        <p>● اجذبه بالجديد والمميز والعروض الخاصة</p>
+        <p>● امدحه واجعله يشعر بالتميز</p>
+        <p>● استخدم العروض والـ offers معه</p>
+        <div class="mt-10">
+          <span class="trait-tag">يحب الجديد</span>
+          <span class="trait-tag">العروض</span>
+          <span class="trait-tag">التقدير</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-20">
+      <div class="card rose">
+        <h3>⚖️ الفرق بين RTB و Pushy Style</h3>
+        <div class="two-cols mt-10">
+          <div>
+            <div class="badge badge-green">✅ RTB Style — البيع الاستشاري</div>
+            <ul class="mt-8">
+              <li>أميّز العميل وأعرف هو محتاج إيه</li>
+              <li>أعرض الفائدة قبل المميزات</li>
+              <li>أسمع… أسمع… أسمع</li>
+              <li>العميل هو اللي يقرر يأخد إيه</li>
+              <li>اهتمامي بالعميل مش بالمنتج</li>
+            </ul>
+          </div>
+          <div>
+            <div class="badge badge-rose">❌ Pushy Style — البيع الإلزامي</div>
+            <ul class="mt-8">
+              <li>أميّز منتج بعينه عن الباقي</li>
+              <li>بقول المميزات بس بدون فوائد</li>
+              <li>كأني بقول مفيش أحسن من المنتج ده</li>
+              <li>لا مفر (هتاخد ده يعني هتاخده)</li>
+              <li>اهتمامي بنفسي وبالبيع فقط</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUESTIONS ===== -->
+  <div class="section" id="questions">
+    <div class="section-header">
+      <h2>💬 الأسئلة الذكية</h2>
+      <p>الأسئلة الصحيحة تبني ثقة العميل وتزيد فرص البيع المناسب</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="questions-tabs">
+      <button class="qtab active" onclick="showQTab('exploration')">🔍 أسئلة الاستكشاف</button>
+      <button class="qtab" onclick="showQTab('history')">📋 التاريخ الاستهلاكي</button>
+      <button class="qtab" onclick="showQTab('extra')">➕ الاحتياجات الإضافية</button>
+      <button class="qtab" onclick="showQTab('skin_q')">🌸 أسئلة تشخيص البشرة</button>
+      <button class="qtab" onclick="showQTab('hair_q')">💇 أسئلة الشعر</button>
+    </div>
+
+    <div class="questions-panel active" id="q-exploration">
+      <div class="info-note">🎯 <strong>هدفها:</strong> فهم المشكلة الحقيقية للعميل قبل أي توصية</div>
+      <div class="question-item"><div class="q-num">1</div><div><div class="q-text">ما هي أكثر مشكلة تضايقك في بشرتك حالياً؟</div></div></div>
+      <div class="question-item"><div class="q-num">2</div><div><div class="q-text">هل تلاحظين لمعاناً في منطقة الجبهة والأنف (T-Zone) أم جفافاً في الخدود؟</div></div></div>
+      <div class="question-item"><div class="q-num">3</div><div><div class="q-text">كيف تشعرين ببشرتك بعد غسلها بالماء؟</div><div class="q-note">مشدودة = جافة | دهنية = دهنية | متهيجة = حساسة | عادية = نوع عادي</div></div></div>
+      <div class="question-item"><div class="q-num">4</div><div><div class="q-text">هل تظهر عليك حبوب أو رؤوس سوداء في مناطق معينة؟</div></div></div>
+      <div class="question-item"><div class="q-num">5</div><div><div class="q-text">هل تشعرين بحرقان أو احمرار عند استخدام بعض المنتجات؟</div><div class="q-note">إذا نعم = احتمال بشرة حساسة</div></div></div>
+      <div class="question-item"><div class="q-num">6</div><div><div class="q-text">متى بدأت تلاحظين هذه المشكلة؟ وهل أثّر عليها أي شيء كالحمل أو التوتر أو تغيير الطقس؟</div></div></div>
+    </div>
+
+    <div class="questions-panel" id="q-history">
+      <div class="info-note">📋 <strong>هدفها:</strong> تجنب تكرار منتجات لم تنفع أو سببت مشاكل</div>
+      <div class="question-item"><div class="q-num">1</div><div><div class="q-text">ما هي المنتجات التي استخدمتيها سابقاً لهذه المشكلة؟</div></div></div>
+      <div class="question-item"><div class="q-num">2</div><div><div class="q-text">هل هناك مكونات معينة تسبب لكِ تحسساً أو احمراراً؟</div><div class="q-note">مثل: عطور، كحول، صابون، أحماض</div></div></div>
+      <div class="question-item"><div class="q-num">3</div><div><div class="q-text">ما الذي لم يعجبك في المنتج الذي كنتِ تستخدمينه؟</div></div></div>
+      <div class="question-item"><div class="q-num">4</div><div><div class="q-text">هل تتناولين أدوية حالياً؟</div><div class="q-note">مهم جداً لمعرفة التفاعلات (مثل Isotretinoin تسبب جفاف شديد)</div></div></div>
+      <div class="question-item"><div class="q-num">5</div><div><div class="q-text">هل خضعتِ لأي إجراءات تجميلية مؤخراً (ليزر، تقشير، بوتوكس)؟</div></div></div>
+    </div>
+
+    <div class="questions-panel" id="q-extra">
+      <div class="info-note">➕ <strong>هدفها:</strong> Cross-selling احترافي بعد تلبية الطلب الأساسي</div>
+      <div class="question-item"><div class="q-num">1</div><div><div class="q-text">بالإضافة لما طلبتِه، هل تهتمين بتوحيد لون البشرة أو حمايتها من الشمس؟</div></div></div>
+      <div class="question-item"><div class="q-num">2</div><div><div class="q-text">هل تبحثين عن روتين يومي كامل أم منتج واحد لحل مشكلة محددة؟</div></div></div>
+      <div class="question-item"><div class="q-num">3</div><div><div class="q-text">هل لاحظتِ ظهور خطوط رفيعة أو تجاعيد في منطقة العين؟</div></div></div>
+      <div class="question-item"><div class="q-num">4</div><div><div class="q-text">هل تهتمين بالعناية بشعرك أيضاً؟ هل هناك مشكلة بالشعر تزعجك؟</div></div></div>
+      <div class="question-item"><div class="q-num">5</div><div><div class="q-text">هل عندك احتياج لفيتامينات للبشرة أو الشعر؟</div></div></div>
+    </div>
+
+    <div class="questions-panel" id="q-skin_q">
+      <div class="info-note">🌸 <strong>هدفها:</strong> تحديد نوع البشرة بدقة</div>
+      <div class="question-item"><div class="q-num">1</div><div><div class="q-text">بعد غسل وجهك بالماء وانتظار ساعة، كيف تشعرين ببشرتك؟</div><div class="q-note">مشدودة = جافة | لامعة وزيتية = دهنية | جافة في الخدود ولامعة في الأنف = مختلطة</div></div></div>
+      <div class="question-item"><div class="q-num">2</div><div><div class="q-text">لو مسحتِ وجهك بمنديل الآن، هل ستجدين أثر زيت عليه؟</div><div class="q-note">في كل الوجه = دهنية | في الأنف والجبين فقط = مختلطة | لا شيء = عادية أو جافة</div></div></div>
+      <div class="question-item"><div class="q-num">3</div><div><div class="q-text">هل تعانين من احمرار أو تهيج عند استخدام أي منتج جديد؟</div><div class="q-note">إذا نعم كثيراً = بشرة حساسة</div></div></div>
+      <div class="question-item"><div class="q-num">4</div><div><div class="q-text">هل تظهر قشور على وجهك خاصةً في الشتاء؟</div><div class="q-note">إذا نعم = جافة أو شديدة الجفاف</div></div></div>
+      <div class="question-item"><div class="q-num">5</div><div><div class="q-text">هل تشتكين من مسام واسعة أو رؤوس سوداء؟</div><div class="q-note">إذا نعم = دهنية أو مختلطة</div></div></div>
+    </div>
+
+    <div class="questions-panel" id="q-hair_q">
+      <div class="info-note">💇 <strong>هدفها:</strong> تشخيص حالة الشعر بدقة قبل التوصية</div>
+      <div class="question-item"><div class="q-num">1</div><div><div class="q-text">كيف يبدو شعرك في اليوم التالي بعد الغسيل؟</div><div class="q-note">دهني وملتصق = شعر دهني | جاف وهايش = شعر جاف | عادي = شعر عادي</div></div></div>
+      <div class="question-item"><div class="q-num">2</div><div><div class="q-text">هل تعانين من تساقط الشعر؟ كم تقريباً يومياً؟</div><div class="q-note">الطبيعي 50-100 شعرة يومياً، أكثر من ذلك يحتاج علاج</div></div></div>
+      <div class="question-item"><div class="q-num">3</div><div><div class="q-text">هل يوجد قشرة في شعرك؟ هل هي بيضاء ومتطايرة أم صفراء وملتصقة؟</div><div class="q-note">بيضاء = جافة | صفراء = دهنية تحتاج علاج مختلف</div></div></div>
+      <div class="question-item"><div class="q-num">4</div><div><div class="q-text">هل شعرك مصبوغ أو معمول بروتين أو كيراتين؟</div><div class="q-note">مهم جداً لاختيار شامبو بدون سلفات</div></div></div>
+      <div class="question-item"><div class="q-num">5</div><div><div class="q-text">هل تستخدمين مجفف شعر أو مكواة بشكل متكرر؟</div></div></div>
+    </div>
+  </div>
+
+  <!-- ===== FAB ===== -->
+  <div class="section" id="fab">
+    <div class="section-header">
+      <h2>🎯 نموذج FAB</h2>
+      <p>حوّل مواصفات المنتج إلى فوائد حقيقية تُقنع العميل</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="card rose mb-20">
+      <h3>📖 ما هو FAB؟</h3>
+      <p>"العملاء ليسوا على استعداد لشراء منتج لمجرد أنه جيد أو مبتكر، لكنهم دائماً على استعداد لشراء حلول لمشاكلهم"</p>
+    </div>
+
+    <div class="fab-example">
+      <h4>📚 مثال عملي — واقي شمس جل للبشرة الدهنية</h4>
+      <div class="fab-eg-row">
+        <div class="fab-eg-item f-eg">
+          <div class="eg-title">F — Feature (مواصفات)</div>
+          <div class="eg-text">جل كريم يحتوي على UVA وUVB بتركيبة oil-free مناسبة للبشرة الدهنية</div>
+        </div>
+        <div class="fab-eg-item a-eg">
+          <div class="eg-title">A — Advantage (مميزات)</div>
+          <div class="eg-text">يمتص الزيوت الزائدة ولا يعطي لمعة، يحمي من الشمس بدون إغلاق المسام</div>
+        </div>
+        <div class="fab-eg-item b-eg">
+          <div class="eg-title">B — Benefit (فوائد)</div>
+          <div class="eg-text">وجهك هيفضل طازج ومش لامع طول اليوم مع حماية كاملة من التعمير والاسمرار</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-20">
+      <h3 class="fw-700-mb16">✏️ جرب بنفسك — اكتب مواصفات منتج وحوّلها لفوائد</h3>
+      <div class="fab-tool">
+        <div class="fab-row">
+          <div class="fab-label fab-f">🔷 F — Feature | المواصفات والحقائق</div>
+          <textarea class="fab-input" id="fab_f" placeholder="مثال: كريم مرطب يحتوي على Hyaluronic Acid بتركيز 2%..."></textarea>
+        </div>
+        <div class="fab-arrow">⬇️</div>
+        <div class="fab-row">
+          <div class="fab-label fab-a">🌟 A — Advantage | المميزات</div>
+          <textarea class="fab-input" id="fab_a" placeholder="مثال: يحتفظ بالرطوبة لفترة طويلة ويمنع جفاف البشرة..."></textarea>
+        </div>
+        <div class="fab-arrow">⬇️</div>
+        <div class="fab-row">
+          <div class="fab-label fab-b">❤️ B — Benefit | الفائدة للعميل</div>
+          <textarea class="fab-input" id="fab_b" placeholder="مثال: بشرتك هتفضل ناعمة ونضرة طول اليوم حتى في الشتاء وما هتحسيش بالشد..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-note mt-16">⚠️ <strong>تحذير مهم:</strong> انتبه من كثرة الـ Features ونسيان الـ Benefits! العميل يشتري الفائدة وليس المواصفة.</div>
+  </div>
+
+  <!-- ===== FORBIDDEN ===== -->
+  <div class="section" id="forbidden">
+    <div class="section-header">
+      <h2>🚫 المحظورات والبدائل الاحترافية</h2>
+      <p>عبارات يجب تجنبها تماماً مع البدائل المناسبة</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="warning-note">⛔ هذه العبارات تُفقد ثقة العميل فوراً وقد تجعله لا يعود أبداً</div>
+
+    <div class="forbidden-grid mt-16">
+      <div class="forbidden-card">
+        <div class="wrong-side">
+          <div class="side-label">❌ ممنوع</div>
+          <div class="phrase-wrong">🚫 أنت مخطئ</div>
+        </div>
+        <div class="divider-arrow">→</div>
+        <div class="right-side">
+          <div class="side-label">✅ البديل</div>
+          <div class="phrase-right">✅ أفهم وجهة نظرك، وأنا أقترح أن…</div>
+        </div>
+      </div>
+
+      <div class="forbidden-card">
+        <div class="wrong-side">
+          <div class="side-label">❌ ممنوع</div>
+          <div class="phrase-wrong">🚫 لا أعرف</div>
+        </div>
+        <div class="divider-arrow">→</div>
+        <div class="right-side">
+          <div class="side-label">✅ البديل</div>
+          <div class="phrase-right">✅ سأتحقق من هذه المعلومة وأرد عليك</div>
+        </div>
+      </div>
+
+      <div class="forbidden-card">
+        <div class="wrong-side">
+          <div class="side-label">❌ ممنوع</div>
+          <div class="phrase-wrong">🚫 لا</div>
+        </div>
+        <div class="divider-arrow">→</div>
+        <div class="right-side">
+          <div class="side-label">✅ البديل</div>
+          <div class="phrase-right">✅ ما هو متاح هو… وسأساعدك في إيجاد حل</div>
+        </div>
+      </div>
+
+      <div class="forbidden-card">
+        <div class="wrong-side">
+          <div class="side-label">❌ ممنوع</div>
+          <div class="phrase-wrong">🚫 دي مش وظيفتي</div>
+        </div>
+        <div class="divider-arrow">→</div>
+        <div class="right-side">
+          <div class="side-label">✅ البديل</div>
+          <div class="phrase-right">✅ سأوجهك للشخص المناسب الذي يستطيع مساعدتك</div>
+        </div>
+      </div>
+
+      <div class="forbidden-card">
+        <div class="wrong-side">
+          <div class="side-label">❌ ممنوع</div>
+          <div class="phrase-wrong">🚫 دي مش سياسة المكان</div>
+        </div>
+        <div class="divider-arrow">→</div>
+        <div class="right-side">
+          <div class="side-label">✅ البديل</div>
+          <div class="phrase-right">✅ عادةً ما نتبع… وهذا يساعد في تقديم أفضل خدمة</div>
+        </div>
+      </div>
+
+      <div class="forbidden-card">
+        <div class="wrong-side">
+          <div class="side-label">❌ ممنوع</div>
+          <div class="phrase-wrong">🚫 حضرتك عايزه في حدود كام؟</div>
+        </div>
+        <div class="divider-arrow">→</div>
+        <div class="right-side">
+          <div class="side-label">✅ البديل</div>
+          <div class="phrase-right">✅ دعيني أفهم احتياجك أولاً وأقترح الأنسب لك</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card gold mt-20">
+      <h3>⭐ القاعدة الذهبية في الخدمة</h3>
+      <div class="two-cols">
+        <div>
+          <h4>✅ أسباب حب العميل لك:</h4>
+          <ul>
+            <li>🤝 بناء علاقة قوية مع العميل</li>
+            <li>💪 الثقة في عملك وكلامك</li>
+            <li>💯 الصدق والشفافية</li>
+            <li>👂 الإنصات والابتسامة</li>
+            <li>🔧 حل مشاكل العميل</li>
+          </ul>
+        </div>
+        <div>
+          <h4>❌ أسباب فقدان العميل:</h4>
+          <ul>
+            <li>💔 هدم العلاقة مع العميل</li>
+            <li>😰 عدم الثقة وعدم الاستعداد</li>
+            <li>🤥 عدم الصدق</li>
+            <li>😒 عدم الإنصات والبرود</li>
+            <li>🤷 عدم الاهتمام بمشاكل العميل</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SKIN DIAGNOSTIC ===== -->
+  <div class="section" id="diag">
+    <div class="section-header">
+      <h2>🔍 تشخيص نوع البشرة</h2>
+      <p>اتبع الخطوات لتحديد نوع بشرة العميل بدقة</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="diag-progress" id="diagProgress">
+      <div class="dot current" id="dp1"></div>
+      <div class="dot" id="dp2"></div>
+      <div class="dot" id="dp3"></div>
+      <div class="dot" id="dp4"></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="diag-step active" id="step1">
+      <div class="card rose">
+        <h3>🧴 السؤال الأول: كيف تشعر البشرة بعد الغسيل بساعة؟</h3>
+        <p>اطلب من العميل وصف شعوره ببشرته بعد الغسل بالماء فقط وانتظار ساعة كاملة</p>
+        <div class="diag-options">
+          <div class="diag-option" onclick="diagNext(1,'tight')"><span class="opt-icon">😣</span> مشدودة وجافة</div>
+          <div class="diag-option" onclick="diagNext(1,'oily')"><span class="opt-icon">✨</span> لامعة وزيتية</div>
+          <div class="diag-option" onclick="diagNext(1,'mixed')"><span class="opt-icon">🌗</span> جافة في الخدود ولامعة في الأنف</div>
+          <div class="diag-option" onclick="diagNext(1,'sensitive')"><span class="opt-icon">🔴</span> احمرار أو حرقان</div>
+          <div class="diag-option" onclick="diagNext(1,'normal')"><span class="opt-icon">😊</span> عادية ومرتاحة</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="diag-step" id="step2">
+      <div class="card gold">
+        <h3>🧻 السؤال الثاني: اختبار المنديل</h3>
+        <p>امسح منطقة الجبهة والأنف (T-Zone) بمنديل ابيض نظيف بعد الغسيل بساعة</p>
+        <div class="diag-options">
+          <div class="diag-option" onclick="diagNext(2,'very_oily')"><span class="opt-icon">💧</span> أثر زيت كثير في كل الوجه</div>
+          <div class="diag-option" onclick="diagNext(2,'t_zone')"><span class="opt-icon">🔺</span> أثر زيت في الأنف والجبهة فقط</div>
+          <div class="diag-option" onclick="diagNext(2,'dry_scales')"><span class="opt-icon">❄️</span> المنديل جاف مع قشور بيضاء</div>
+          <div class="diag-option" onclick="diagNext(2,'clean')"><span class="opt-icon">✅</span> المنديل نظيف تماماً</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="diag-step" id="step3">
+      <div class="card green">
+        <h3>💬 السؤال الثالث: هل توجد شكاوى إضافية؟</h3>
+        <div class="diag-options">
+          <div class="diag-option" onclick="diagNext(3,'blackheads')"><span class="opt-icon">⚫</span> رؤوس سوداء وحبوب</div>
+          <div class="diag-option" onclick="diagNext(3,'redness')"><span class="opt-icon">🔴</span> احمرار وتهيج</div>
+          <div class="diag-option" onclick="diagNext(3,'wrinkles')"><span class="opt-icon">〰️</span> خطوط رفيعة وتجاعيد</div>
+          <div class="diag-option" onclick="diagNext(3,'none')"><span class="opt-icon">✅</span> لا توجد شكاوى إضافية</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 - Result -->
+    <div class="diag-step" id="step4">
+      <div class="result-box" id="diagResult">
+        <!-- Result will be injected here -->
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-rose" onclick="resetDiag()">🔄 تشخيص جديد</button>
+        <button class="btn btn-outline" onclick="navigate('skinroutine')">📋 عرض روتين البشرة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SKIN ROUTINE ===== -->
+  <div class="section" id="skinroutine">
+    <div class="section-header">
+      <h2>✨ روتين العناية بالبشرة</h2>
+      <p>الخطوات الأساسية والاختيارية لكل نوع بشرة</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="skin-type-selector">
+      <button class="skin-btn active" onclick="showSkin('dry')">🌵 البشرة الجافة</button>
+      <button class="skin-btn" onclick="showSkin('oily')">💧 البشرة الدهنية</button>
+      <button class="skin-btn" onclick="showSkin('mixed')">🌗 البشرة المختلطة</button>
+      <button class="skin-btn" onclick="showSkin('sensitive')">🌸 البشرة الحساسة</button>
+      <button class="skin-btn" onclick="showSkin('normal')">😊 البشرة العادية</button>
+    </div>
+
+    <!-- Dry -->
+    <div class="skin-panel active" id="skin-dry">
+      <div class="card rose">
+        <h3>🌵 البشرة الجافة — الخصائص</h3>
+        <p><strong>صفاتها:</strong> جافة، باهتة، مقشرة، خطوط رفيعة، حكة، احمرار، أقل مرونة</p>
+        <h4>ما يقوله العميل:</h4>
+        <ul>
+          <li>أشعر بأن البشرة مشدودة بعد الغسيل</li>
+          <li>في الشتاء تظهر قشور باستمرار</li>
+          <li>تجاعيد وخطوط رفيعة رغم صغر السن</li>
+          <li>لا يوجد أي مظهر لامع</li>
+        </ul>
+        <div class="info-note mt-10">⚠️ درجات الجفاف: مشدودة ← بها قشور ← قشور واحمرار ← خطوط رفيعة ← تجاعيد عميقة</div>
+      </div>
+      <div class="routine-steps">
+        <div class="routine-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">🧴 غسول مناسب (إجباري)</div><div class="step-note">غسول ميلكي بدون صابون، يحتوي على مرطبات. اكتب عليه: Gentle, Moisturizing, Dry Skin. بدون Sodium Lauryl Sulphate.</div></div></div>
+        <div class="routine-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">☀️ واقي شمس (إجباري)</div><div class="step-note">بشرة جافة حساسة جداً للشمس. يفضل في صورة كريم. SPF 30 أو أكثر، Broad Spectrum.</div></div></div>
+        <div class="routine-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">💧 كريم مرطب (إجباري جداً)</div><div class="step-note">ضروري للتغذية والحماية من التجاعيد. يفضل قوام ثقيل (كريم) نهاراً وكريم عناية ليلية.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">4</div><div class="step-content"><div class="step-title">👁️ كريم محيط العين (اختياري)</div><div class="step-note">منطقة العين أكثر عرضة للتجاعيد في البشرة الجافة.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">5</div><div class="step-content"><div class="step-title">〰️ كريم مضاد للتجاعيد (اختياري)</div><div class="step-note">حسب الحالة والسن.</div></div></div>
+      </div>
+      <div class="warning-note">❌ تجنب: التونر للبشرة الجافة (إلا إذا مكتوب عليه للبشرة الجافة) | الصابون العادي | الماء الساخن | المنتجات التي تحتوي على كحول</div>
+    </div>
+
+    <!-- Oily -->
+    <div class="skin-panel" id="skin-oily">
+      <div class="card blue">
+        <h3>💧 البشرة الدهنية — الخصائص</h3>
+        <p><strong>صفاتها:</strong> مسام واسعة، لامعة، رؤوس سوداء، حبوب، حب شباب، أقل عرضة للتجاعيد المبكرة</p>
+        <h4>ما يقوله العميل:</h4>
+        <ul>
+          <li>يشتكي من لمعان بالوجه</li>
+          <li>ملمس زيتي عند مسح الوجه بالمنديل</li>
+          <li>رؤوس سوداء أو بيضاء</li>
+          <li>ظهور حبوب بصفة مستمرة</li>
+        </ul>
+        <div class="info-note mt-10">درجات الدهنية: لمعة وإفرازات ← مسام واسعة ← رؤوس سوداء ← حبايات ← حب شباب ملتهب</div>
+      </div>
+      <div class="routine-steps">
+        <div class="routine-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">🧴 غسول للبشرة الدهنية (إجباري)</div><div class="step-note">يفضل جل. مكتوب عليه: Foaming, Oil Control, For Oily Skin. من مكوناته: Salicylic Acid, Tea Tree Oil.</div></div></div>
+        <div class="routine-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">💊 تونر لتضييق المسام (إجباري)</div><div class="step-note">يقلل الإفرازات الدهنية ويضيق المسام. يوضع بعد الغسول على منطقة الـ T-Zone.</div></div></div>
+        <div class="routine-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">☀️ واقي شمس (إجباري)</div><div class="step-note">يفضل Gel أو Fluid. Non-comedogenic حتى لا يغلق المسام.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">4</div><div class="step-content"><div class="step-title">💧 سيروم مرطب (اختياري)</div><div class="step-note">قوام خفيف مناسب للبشرة الدهنية، بدون زيوت.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">5</div><div class="step-content"><div class="step-title">🌿 تقشير مرة أسبوعياً (اختياري)</div><div class="step-note">لإزالة الخلايا الميتة وتقليل الرؤوس السوداء.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">6</div><div class="step-content"><div class="step-title">🔵 علاج الحبوب (حسب الحالة)</div><div class="step-note">فقط عند وجود حبوب.</div></div></div>
+      </div>
+      <div class="success-note">✅ تذكر: المنتجات يجب أن تكون Non-comedogenic لا تغلق المسام. ننصح العميل بتجنب لمس الحبوب أو الضغط عليها.</div>
+    </div>
+
+    <!-- Mixed -->
+    <div class="skin-panel" id="skin-mixed">
+      <div class="card purple">
+        <h3>🌗 البشرة المختلطة — الخصائص</h3>
+        <p>دهنية في منطقة الـ T-Zone (الجبهة، الأنف، الذقن) وجافة أو عادية في الخدود</p>
+        <div class="info-note mt-8">💡 في حالة عدم وجود منتج محدد للبشرة المختلطة، يتم التعامل معها كبشرة دهنية</div>
+      </div>
+      <div class="routine-steps">
+        <div class="routine-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">🧴 غسول للبشرة المختلطة (إجباري)</div><div class="step-note">يوازن بين الجفاف والدهنية.</div></div></div>
+        <div class="routine-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">💊 تونر على المنطقة الدهنية (إجباري)</div><div class="step-note">يوضع فقط على الـ T-Zone وليس على الخدود الجافة.</div></div></div>
+        <div class="routine-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">☀️ واقي شمس (إجباري)</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">4</div><div class="step-content"><div class="step-title">💧 مرطب للمنطقة الجافة (اختياري)</div><div class="step-note">يوضع على الخدود الجافة فقط عند الشكوى.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">5</div><div class="step-content"><div class="step-title">🌿 تقشير (اختياري)</div></div></div>
+      </div>
+    </div>
+
+    <!-- Sensitive -->
+    <div class="skin-panel" id="skin-sensitive">
+      <div class="card orange">
+        <h3>🌸 البشرة الحساسة — الخصائص</h3>
+        <p><strong>صفاتها:</strong> احمرار وسهلة الالتهاب، حكة، جفاف</p>
+        <h4>ما يقوله العميل:</h4>
+        <ul>
+          <li>احمرار شديد عند استخدام غسول غير مناسب</li>
+          <li>التهاب وتورم عند التعرض للشمس</li>
+          <li>حرقان عند استخدام منتجات تحتوي على عطور</li>
+        </ul>
+      </div>
+      <div class="routine-steps">
+        <div class="routine-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">🧴 غسول للبشرة الحساسة (إجباري)</div><div class="step-note">يجب أن يكون: Fragrance Free, Alcohol Free, Soap Free, Hypoallergenic.</div></div></div>
+        <div class="routine-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">☀️ واقي شمس للبشرة الحساسة (إجباري)</div><div class="step-note">ضروري جداً لأن البشرة الحساسة سريعة الالتهاب من الشمس.</div></div></div>
+        <div class="routine-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">💧 كريم مرطب مناسب (إجباري)</div><div class="step-note">للتغذية والوقاية من التجاعيد. Fragrance Free.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">4</div><div class="step-content"><div class="step-title">🌊 Thermal Water (اختياري)</div><div class="step-note">لتهدئة وترطيب البشرة المتهيجة.</div></div></div>
+      </div>
+      <div class="warning-note">❌ لا تستخدم: التونر العادي | السنفرة أو كريمات التقشير | منتجات تحتوي على كحول أو عطور</div>
+    </div>
+
+    <!-- Normal -->
+    <div class="skin-panel" id="skin-normal">
+      <div class="card green">
+        <h3>😊 البشرة العادية — الخصائص</h3>
+        <p>بشرة ناعمة ونضرة، بين الجافة والدهنية، نادراً ما تعاني من مشاكل</p>
+      </div>
+      <div class="routine-steps">
+        <div class="routine-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">🧴 غسول للبشرة العادية (إجباري)</div><div class="step-note">معظم المنتجات مكتوب عليها للبشرة العادية.</div></div></div>
+        <div class="routine-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">☀️ واقي شمس (إجباري)</div></div></div>
+        <div class="routine-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">💧 مرطب مغذي (إجباري)</div><div class="step-note">للتغذية والحماية من الجفاف والتجاعيد.</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">4</div><div class="step-content"><div class="step-title">💊 تونر (اختياري)</div></div></div>
+        <div class="routine-step step-optional"><div class="step-num">5</div><div class="step-content"><div class="step-title">〰️ كريم وقاية من التجاعيد (اختياري)</div></div></div>
+      </div>
+    </div>
+
+    <div class="card gold mt-24">
+      <h3>📊 جدول مقارنة سريعة</h3>
+      <div class="overflow-x-auto mt-10">
+        <table class="tbl-full">
+          <thead>
+            <tr class="card-dark-gradient">
+              <th class="p-10-12-right">نوع البشرة</th>
+              <th class="p-10-12">غسول</th>
+              <th class="p-10-12">تونر</th>
+              <th class="p-10-12">مرطب</th>
+              <th class="p-10-12">واقي شمس</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-soft"><td class="p-8-12-bold">العادية</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">✅ ضروري</td></tr>
+            <tr><td class="p-8-12-bold">الجافة</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">❌ لا يفضل</td><td class="p-8-12-center">⭐ ضروري جداً</td><td class="p-8-12-center">✅ ضروري</td></tr>
+            <tr class="bg-soft"><td class="p-8-12-bold">الحساسة</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">❌ لا يفضل</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">✅ ضروري</td></tr>
+            <tr><td class="p-8-12-bold">الدهنية/المختلطة</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">⭐ مهم جداً</td><td class="p-8-12-center">✅ يومي</td><td class="p-8-12-center">✅ ضروري</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SUNSCREEN ===== -->
+  <div class="section" id="sunscreen">
+    <div class="section-header">
+      <h2>☀️ واقي الشمس — دليل شامل</h2>
+      <p>كل ما تحتاج معرفته لتوصية واقي الشمس الصحيح</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="card rose">
+      <h3>⚠️ لماذا واقي الشمس ضروري؟</h3>
+      <ul>
+        <li>1. حماية من الاسمرار وتقليل ظهور البقع</li>
+        <li>2. حماية من حروق الشمس</li>
+        <li>3. تقليل ظهور الخطوط الرفيعة والتجاعيد</li>
+        <li>4. حماية من الإصابة بسرطان الجلد</li>
+      </ul>
+    </div>
+
+    <div class="two-cols mt-16">
+      <div class="card blue">
+        <h3>🔆 UVB — الأشعة قصيرة المدى</h3>
+        <p>مسؤولة عن الأضرار السريعة: <strong>حروق الشمس والاسمرار</strong></p>
+        <p class="text-muted-mt">UVB = Burns & Pigmentation</p>
+      </div>
+      <div class="card orange">
+        <h3>🕰️ UVA — الأشعة طويلة المدى</h3>
+        <p>مسؤولة عن الأضرار البعيدة: <strong>التجاعيد وسرطان الجلد</strong></p>
+        <p class="text-muted-mt">UVA = Aging</p>
+      </div>
+    </div>
+
+    <div class="card gold mt-16">
+      <h3>🔢 فهم درجات الـ SPF</h3>
+      <div class="spf-boxes">
+        <div class="spf-box"><div class="spf-num">SPF 15-25</div><div class="spf-pct">93%</div><div class="spf-label">حماية</div></div>
+        <div class="spf-box"><div class="spf-num">SPF 30-50</div><div class="spf-pct">97%</div><div class="spf-label">حماية</div></div>
+        <div class="spf-box"><div class="spf-num">SPF 50+</div><div class="spf-pct">98%</div><div class="spf-label">حماية</div></div>
+      </div>
+      <div class="info-note mt-12">💡 الفرق بسيط بين الدرجات! يكفي SPF 30 أو أكثر. لا يوجد واقي شمس SPF 100 حقيقي!</div>
+    </div>
+
+    <div class="card green mt-16">
+      <h3>✅ أهم مواصفات الـ Sunblock الجيد</h3>
+      <ol class="nav-sub-18">
+        <li><strong>SPF 30</strong> أو أكثر</li>
+        <li><strong>Broad Spectrum</strong> ضد UVA وUVB (كلمة UVA داخل دائرة = علامة الحماية)</li>
+        <li><strong>Water Resistant</strong> مقاوم للماء والعرق</li>
+        <li>مناسب لنوع البشرة</li>
+      </ol>
+    </div>
+
+    <div class="card mt-16">
+      <h3>🧴 نوع الواقي حسب نوع البشرة والمنطقة</h3>
+      <div class="overflow-x-auto">
+        <table class="tbl-full-mt">
+          <thead>
+            <tr class="btn-rose-sm">
+              <th class="p-10-12">نوع الواقي</th>
+              <th class="p-10-12">نوع البشرة</th>
+              <th class="p-10-12">مكان الاستخدام</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-soft"><td class="p-8-12-bold">كريم (Cream)</td><td class="p-8-12">جافة وعادية</td><td class="p-8-12">الوجه</td></tr>
+            <tr><td class="p-8-12-bold">جل أو فلويد (Fluid/Gel)</td><td class="p-8-12">دهنية</td><td class="p-8-12">الوجه</td></tr>
+            <tr class="bg-soft"><td class="p-8-12-bold">سبراي (Spray)</td><td class="p-8-12">جميع الأنواع</td><td class="p-8-12">الجسم</td></tr>
+            <tr><td class="p-8-12-bold">لوشن ميلكي (Milky)</td><td class="p-8-12">جميع الأنواع</td><td class="p-8-12">الجسم</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card mt-16">
+      <h3>📋 كيفية استخدامه</h3>
+      <ul>
+        <li>1. يوضع قبل التعرض للشمس بـ 15-20 دقيقة</li>
+        <li>2. كمية مناسبة تغطي المنطقة كاملة</li>
+        <li>3. إعادة وضعه كل ساعتين</li>
+        <li>4. لا يوضع حول منطقة العين (المنطقة رقيقة وحساسة)</li>
+        <li>5. يوضع قبل المكياج بربع ساعة</li>
+        <li>6. على كل المناطق المعرضة: وجه، جسم، يدين، قدمين</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== PROBLEMS ===== -->
+  <div class="section" id="problems">
+    <div class="section-header">
+      <h2>⚕️ مشاكل البشرة الشائعة</h2>
+      <p>دليل سريع لأهم مشاكل البشرة والحلول المناسبة</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">👁️ الهالات السوداء حول العين <span>▼</span></div>
+      <div class="problem-body">
+        <strong>الأسباب:</strong>
+        <ul><li>عوامل وراثية، الإجهاد والتعب، الأنيميا</li><li>تقدم السن، اضطرابات النوم والسهر</li><li>فرك العين بشكل مستمر، التدخين والكافيين</li></ul>
+        <strong class="display-block-mt">النصائح:</strong>
+        <ul><li>كريم مناسب لدرجة الحالة (بسيطة/متوسطة/شديدة)</li><li>يوضع بلطف على شكل نقط بحركة دائرية</li><li>تجنب الفرك والاحتكاك، شرب الماء</li><li>8 ساعات نوم، تجنب الكافيين والتدخين</li><li>تحاليل صورة دم كاملة للاطمئنان على الأنيميا</li></ul>
+      </div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">💫 انتفاخات حول العين <span>▼</span></div>
+      <div class="problem-body">
+        <strong>الأسباب:</strong>
+        <ul><li>الإسراف في الأطعمة المالحة (احتباس سوائل)</li><li>كثرة البكاء، كثرة النوم أو قلته</li><li>مشاكل الغدة الدرقية، عوامل وراثية</li></ul>
+        <strong class="display-block-mt">النصائح:</strong>
+        <ul><li>غسل الجفون بالماء البارد</li><li>الابتعاد عن الأطعمة الغنية بالملح</li><li>الشاي الأخضر كمدر طبيعي للسوائل</li><li>رفع الوسادة أثناء النوم</li><li>كريم مخصص للانتفاخات</li></ul>
+      </div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">〰️ التجاعيد والخطوط الرفيعة <span>▼</span></div>
+      <div class="problem-body">
+        <strong>الأسباب:</strong>
+        <ul><li>تقدم السن وانخفاض الكولاجين</li><li>جفاف الجلد، التعرض للشمس</li><li>التدخين وقلة شرب الماء</li></ul>
+        <strong class="display-block-mt">خطة العلاج:</strong>
+        <ul><li>☀️ واقي شمس أولاً وأبداً</li><li>🌿 تقشير لتجديد الخلايا</li><li>💧 ترطيب مستمر للحماية من الجفاف</li><li>🍊 مضادات الأكسدة (Vit C, E, B3)</li><li>💊 فيتامينات A, C, E</li><li>〰️ كريم مناسب لعمر العميل وعمق التجاعيد</li></ul>
+        <div class="info-note mt-8">المواد الفعالة: Hyaluronic Acid, Collagen, Elastin, Retinol, Ceramide, ذرات الذهب</div>
+      </div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">🍊 السيلوليت <span>▼</span></div>
+      <div class="problem-body">
+        <strong>ما هو:</strong> تراكم أو سوء توزيع الدهون تحت الجلد بشكل يشبه قشرة البرتقالة. يظهر في الأرداف والفخذين والبطن. ليس له علاقة بالسمنة.
+        <strong class="display-block-mt">العلاج:</strong>
+        <ul><li>الإكثار من شرب الماء</li><li>تقليل الدهون في الأكل</li><li>ممارسة الرياضة</li><li>مساج يدوي أو أجهزة</li><li>كريمات تحتوي على Caffeine لإذابة الدهون</li></ul>
+      </div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">📏 علامات التمدد (Stretch Marks) <span>▼</span></div>
+      <div class="problem-body">
+        <strong>ما هي:</strong> خطوط تظهر نتيجة تمدد الجلد. في البداية حمراء (أسهل في العلاج) ثم تتحول للبيضاء.
+        <strong class="display-block-mt">الأسباب:</strong> زيادة أو فقدان الوزن السريع، الحمل والولادة، الكورتيزون.
+        <strong class="display-block-mt">الوقاية والعلاج:</strong>
+        <ul><li>تجنب زيادة/فقدان الوزن السريع</li><li>ترطيب مستمر لزيادة مرونة الجلد (آمن أثناء الحمل)</li><li>منتجات تحتوي على Shea وCocoa Butter</li><li>Vit E, Vit C, Zinc</li></ul>
+        <div class="warning-note mt-8">⚠️ أخبر العميل أن العلاج يستمر أشهراً حتى الوصول للنتيجة</div>
+      </div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">🦢 جلد الوزة (Chicken Skin) <span>▼</span></div>
+      <div class="problem-body">
+        <strong>ما هو:</strong> نتوءات صغيرة تظهر على البشرة بسبب تجمع الكيراتين عند مخرج الشعر. يظهر في الجزء الخلفي من الذراع والظهر والأفخاذ.
+        <strong class="display-block-mt">العلاج:</strong>
+        <ul><li>مرطبات تحتوي على مقشرات (Urea, AHA)</li><li>في حالة الاحمرار: مرطبات بمضادات التهاب</li><li>يفضل لف الكريم بسلوفان بعد وضعه لزيادة الامتصاص</li></ul>
+      </div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">👣 تشققات القدمين <span>▼</span></div>
+      <div class="problem-body">
+        <ul><li>مرطب قوي خاص بالقدمين</li><li>كريمات تحتوي على AHA أو Urea تعمل كمقشر للطبقة السميكة في الكعب</li></ul>
+      </div>
+    </div>
+
+    <div class="problem-accordion">
+      <div class="problem-header" onclick="toggleProblem(this)">💋 تشققات الشفاه <span>▼</span></div>
+      <div class="problem-body">
+        <strong>الأسباب:</strong> برودة الجو، نقص Vit B2، Isotretinoin، التنفس بفم مفتوح.
+        <strong class="display-block-mt">العلاج:</strong>
+        <ul><li>كريم مرطب مخصص للشفاه (Lip Balm)</li><li>تجنب الفواكه الحمضية حتى التئام الشفتين</li><li>أطعمة غنية بـ Vit B2 (سبانخ، موز، خوخ)</li><li>شرب الماء بكميات كبيرة</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ACNE ===== -->
+  <div class="section" id="acne">
+    <div class="section-header">
+      <h2>💊 الحبوب وحب الشباب</h2>
+      <p>تشخيص الحبوب والعلاج المناسب لكل حالة</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="card rose">
+      <h3>🔬 كيف تتكون الحبوب؟</h3>
+      <ol class="nav-sub-18">
+        <li>زيادة إفراز الدهون من الغدد الدهنية</li>
+        <li>تراكم الخلايا الميتة فتغلق المسام</li>
+        <li>التعرض للبكتيريا</li>
+      </ol>
+      <p class="mt-8">تنتشر في: الوجه، الرقبة، الظهر، الصدر</p>
+    </div>
+
+    <div class="two-cols mt-16">
+      <div class="card blue">
+        <h3>⚫ الرؤوس السوداء (Open Comedo)</h3>
+        <p>مسام الجلد تتعرض للهواء والأتربة فتتأكسد وتتحول للون الأغمق</p>
+        <div class="info-note mt-8">المنتجات يجب أن تكون <strong>Non-comedogenic</strong></div>
+      </div>
+      <div class="card">
+        <h3>⚪ الرؤوس البيضاء (Closed Comedo)</h3>
+        <p>زيادة إفراز الدهون + خلايا ميتة + بكتيريا = تقفل المسام مكونةً الرؤوس البيضاء</p>
+      </div>
+    </div>
+
+    <div class="card mt-16">
+      <h3>📊 العلاج حسب نوع الحبوب</h3>
+      <table class="acne-table mt-10">
+        <thead>
+          <tr><th>نوع الحبوب</th><th>العلاج المقترح</th><th>ملاحظة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>حبوب بسيطة</td><td>كريم مضاد حيوي (Aknimycin, Fucidin)</td><td>متاح بالصيدلية</td></tr>
+          <tr><td>حبوب بها صديد وملتهبة</td><td>Fucicort (3 أيام فقط) ثم مضاد حيوي عادي</td><td>يحتوي كورتيزون — بحد أقصى 3 أيام</td></tr>
+          <tr><td>أكثر من حبايتين ملتهبة وعميقة</td><td>إحالة للطبيب المختص</td><td>⚠️ تجاوز الصلاحية</td></tr>
+          <tr><td>حب الشباب (Acne Vulgaris)</td><td>إحالة للطبيب المختص</td><td>⚠️ يحتاج تدخل طبي</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card gold mt-16">
+      <h3>✅ نصائح الروتين لعميل يعاني من حبوب بسيطة</h3>
+      <ul>
+        <li>روتين يومي للعناية بالبشرة الدهنية</li>
+        <li>غسل الوجه بغسول للبشرة الدهنية 2-3 مرات يومياً</li>
+        <li>تجنب الصابون العادي والسكراب</li>
+        <li>منتجات Non-comedogenic فقط</li>
+        <li>تجنب لمس الحبوب أو الضغط عليها (مهم جداً)</li>
+        <li>واقي شمس مناسب للبشرة الدهنية</li>
+      </ul>
+    </div>
+
+    <div class="card border-purple-mt">
+      <h3 class="persona-purple">💊 Isotretinoin — نصائح للمريض</h3>
+      <p class="mb-8">دواء لحالات حب الشباب الشديد. يسبب جفافاً شديداً جداً. يوصفه الطبيب فقط.</p>
+      <h4>نصائح مهمة عند صرف روشتة بها Isotretinoin:</h4>
+      <ul>
+        <li>✅ استخدام واقي شمس إجباري (حساسية مفرطة للشمس)</li>
+        <li>✅ تجنب العدسات اللاصقة (يسبب جفاف عين) — استخدام قطرات مرطبة</li>
+        <li>✅ مرطبات لليدين والجسم</li>
+        <li>✅ مرطب شفاه</li>
+        <li>✅ كريم Effaclar H (مخصص للجلد المتضرر من Isotretinoin)</li>
+        <li>❌ تجنب إزالة الشعر بالشمع أو الليزر</li>
+        <li>❌ تجنب الأطعمة الحارة والمواد الحافظة</li>
+        <li>⚠️ ممنوع نهائياً أثناء الحمل (يسبب تشوه أجنة)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== WHITENING ===== -->
+  <div class="section" id="whitening">
+    <div class="section-header">
+      <h2>🌸 التفتيح والبقع الداكنة</h2>
+      <p>أسباب الاسمرار وخطوات التفتيح الصحيحة</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="card rose">
+      <h3>📋 أسباب اسمرار الجلد</h3>
+      <ul>
+        <li>1. التعرض المباشر لأشعة الشمس</li>
+        <li>2. حالات جلدية مثل الأكزيما وحب الشباب والحروق</li>
+        <li>3. بعض الأدوية تزيد من حساسية البشرة للشمس</li>
+        <li>4. الحمل (كلف)</li>
+        <li>5. التغيرات الهرمونية</li>
+      </ul>
+    </div>
+
+    <div class="card mt-16">
+      <h3>👥 أنواع العملاء الطالبين للتفتيح</h3>
+      <div class="two-cols mt-10">
+        <div class="box-soft">
+          <div class="fw-700-rose">1. تفتيح عام (وجه كامل أو يدين)</div>
+          <p class="text-sm">منتجات مناسبة لتفتيح الوجه أو الجسم بالكامل</p>
+        </div>
+        <div class="box-soft">
+          <div class="fw-700-rose">2. تفتيح بقع غامقة</div>
+          <p class="text-sm">منتج لتفتيح البقع أولاً ثم الانتقال لتوحيد اللون كاملاً</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card gold mt-16">
+      <h3>✅ خطوات الروتين اليومي للتفتيح</h3>
+      <h4>صباحاً:</h4>
+      <ol class="nav-sub-18">
+        <li>غسيل الوجه بالغسول المناسب</li>
+        <li>تنشيف بفوطة ناعمة (الاحتكاك الشديد يغمّق الجلد)</li>
+        <li>واقي شمس (SPF 15 في البيت — SPF 30+ عند الخروج) <strong>إجباري جداً</strong></li>
+        <li>كريم التفتيح المناسب للنهار</li>
+      </ol>
+      <h4>ليلاً:</h4>
+      <ol class="nav-sub-18">
+        <li>غسيل الوجه لإزالة كل المكياج والأتربة</li>
+        <li>كريم تفتيح مرطب ومغذٍ للعناية الليلية</li>
+      </ol>
+      <h4>أسبوعياً:</h4>
+      <p>تقشير الوجه والجسم والمنطقة المراد تفتيحها</p>
+    </div>
+
+    <div class="warning-note mt-12">⚠️ <strong>ملاحظة مهمة:</strong> عند صرف منتج لعلاج آثار الحبوب أو بقع غامقة، ننصح العميلة بوضع المنتج نصف ساعة إلى ساعة ليلاً بدون التعرض للضوء ثم شطفه بالماء.</div>
+
+    <div class="card mt-16">
+      <h3>💜 تفتيح المناطق الحساسة (إبط، بين الفخذين)</h3>
+      <h4>أسباب قتامة هذه المناطق:</h4>
+      <ul>
+        <li>احتكاك الفخذين في حالات زيادة الوزن</li>
+        <li>احتكاك البشرة مع الملابس</li>
+        <li>وسائل إزالة الشعر (حلاقة)</li>
+        <li>كريمات غير مناسبة</li>
+      </ul>
+      <div class="info-note mt-10">
+        <strong>شروط منتجات المناطق الحساسة:</strong><br>
+        ✅ مكتوب عليه مناسب للمناطق الحساسة<br>
+        ✅ خالٍ من البارابين والمواد الحافظة والكحول<br>
+        ✅ خالٍ من الكورتيزون والهيدروكينون
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HAIR CARE ===== -->
+  <div class="section" id="haircare">
+    <div class="section-header">
+      <h2>💇 العناية بالشعر — الأساسيات</h2>
+      <p>أنواع الشعر والروتين المناسب لكل نوع</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="three-cols">
+      <div class="card green">
+        <h3>🌿 الشعر العادي</h3>
+        <p>شعر صحي لامع، لا يشتكي من جفاف أو قشرة</p>
+        <h4>كيفية الاعتناء:</h4>
+        <ul>
+          <li>يغسل 2-3 مرات أسبوعياً</li>
+          <li>شامبو مناسب للشعر العادي</li>
+          <li>بلسم للشعر العادي</li>
+          <li>كريم تصفيف مناسب</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <h3>💧 الشعر الدهني</h3>
+        <p>فروة دهنية، مظهر لامع وملمس دهني، أحياناً قشرة دهنية</p>
+        <h4>كيفية الاعتناء:</h4>
+        <ul>
+          <li>يغسل يوم بعد يوم</li>
+          <li>شامبو مخصص للشعر الدهني</li>
+          <li>بلسم على الأطراف فقط (لا الفروة)</li>
+          <li>تجنب الزيوت والكريمات المرطبة</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h3>🔥 الشعر الجاف</h3>
+        <p>باهت، تقصف الأطراف، هايش (متطاير)، أكثر عرضة للتكسر</p>
+        <h4>كيفية الاعتناء:</h4>
+        <ul>
+          <li>يغسل كل 3 أيام</li>
+          <li>شامبو للشعر الجاف</li>
+          <li>بلسم ضروري بعد الشامبو</li>
+          <li>حمام كريم مرة أسبوعياً</li>
+          <li>كريم تصفيف مرطب</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card mt-20">
+      <h3>📋 الروتين الأساسي للشعر</h3>
+      <div class="two-cols mt-10">
+        <div>
+          <h4>🧴 الشامبو</h4>
+          <ul>
+            <li>يوضع على فروة الرأس فقط</li>
+            <li>تدليك الفروة جيداً</li>
+            <li>يشطف بالماء البارد في النهاية</li>
+            <li>2-3 مرات أسبوعياً حسب النوع</li>
+            <li>يفضل خالٍ من Sodium Lauryl Sulphate</li>
+          </ul>
+        </div>
+        <div>
+          <h4>💆 البلسم (Conditioner)</h4>
+          <ul>
+            <li>يوضع على الأطراف فقط بعيداً عن الفروة</li>
+            <li>يترك 2-3 دقائق ثم يشطف</li>
+            <li>ينعم الشعر ويقلل الهيشان</li>
+            <li>يعوض الترطيب المفقود بعد الشامبو</li>
+          </ul>
+        </div>
+      </div>
+      <div class="two-cols mt-14">
+        <div>
+          <h4>🎭 حمام الكريم</h4>
+          <ul>
+            <li>يوضع على الأطراف وليس الفروة</li>
+            <li>يترك 5-30 دقيقة (حسب التعليمات)</li>
+            <li>فاعليته أكثر من البلسم</li>
+            <li>يعطي ترطيباً مكثفاً ولمعاناً</li>
+          </ul>
+        </div>
+        <div>
+          <h4>✨ السيروم وكريم التصفيف</h4>
+          <ul>
+            <li>يوضع على الأطراف فقط</li>
+            <li>لا يحتاج الشعر للغسيل بعده</li>
+            <li>يفضل استخدامه والشعر بين الجفاف والبلل</li>
+            <li>لمعان ومظهر صحي</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card gold mt-16">
+      <h3>🔥 Heat Protector — واقي من الحرارة</h3>
+      <p>يعمل كطبقة عازلة بين الشعر وحرارة السيشوار والمكواة والشمس. يحافظ على الرطوبة الطبيعية للشعر.</p>
+    </div>
+
+    <div class="card mt-16">
+      <h3>🫙 حمام الزيت — الأنواع والفوائد</h3>
+      <div class="two-cols">
+        <div>
+          <h4>أهم الزيوت:</h4>
+          <ul>
+            <li>🌰 <strong>زيت اللوز:</strong> قوة وترطيب وتنشيط النمو</li>
+            <li>🫒 <strong>زيت الزيتون:</strong> منع التساقط وتقوية الشعر</li>
+            <li>🥥 <strong>زيت جوز الهند:</strong> إطالة ومنع التساقط</li>
+            <li>🌱 <strong>زيت الخروع:</strong> تكثيف وتنعيم</li>
+            <li>🌾 <strong>زيت الجوجوبا:</strong> تنظيف الفروة وحماية الشعر</li>
+          </ul>
+        </div>
+        <div>
+          <h4>تعليمات مهمة:</h4>
+          <ul>
+            <li>يوضع على الشعر ويشطف — لا يترك دون شطف</li>
+            <li>يستخدم مرة أسبوعياً</li>
+            <li>لا يفضل للشعر الدهني خاصةً الفروة</li>
+            <li>تركيبة المعمل: 7 زيوت جاهزة متوفرة</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HAIR LOSS ===== -->
+  <div class="section" id="hairloss">
+    <div class="section-header">
+      <h2>🌿 تساقط الشعر والصلع</h2>
+      <p>أسباب التساقط وطرق التشخيص والعلاج</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="info-note">✅ <strong>الطبيعي:</strong> سقوط 50-100 شعرة يومياً — معدل النمو الطبيعي: 1-2 سم شهرياً</div>
+
+    <div class="card rose mt-16">
+      <h3>⚠️ أسباب تساقط الشعر</h3>
+      <div class="two-cols">
+        <ul>
+          <li>سوء التغذية والرجيم القاسي</li>
+          <li>الأنيميا ونقص الحديد</li>
+          <li>الضغوط النفسية</li>
+          <li>الأمراض العضوية (سكر، غدة درقية)</li>
+          <li>اضطرابات هرمونية (حمل، رضاعة)</li>
+        </ul>
+        <ul>
+          <li>الإكثار من الصبغات والكيماويات</li>
+          <li>الإفراط في مجففات الشعر</li>
+          <li>القشرة الشديدة</li>
+          <li>الصلع الوراثي</li>
+          <li>الثعلبة</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card gold mt-16">
+      <h3>🔍 متى تحيل للطبيب؟</h3>
+      <ul>
+        <li>⚠️ عدم انتظام الدورة الشهرية أو ظهور شعر في الوجه = مشكلة هرمونية → طبيب</li>
+        <li>⚠️ دوائر خالية تماماً من الشعر = ثعلبة أو تينيا → طبيب</li>
+        <li>⚠️ تساقط مع وجود قشرة → اعالج القشرة أولاً ثم التساقط</li>
+      </ul>
+    </div>
+
+    <div class="card mt-16">
+      <h3>✅ خطة العلاج</h3>
+      <ol class="nav-sub-18">
+        <li>تجنب الأسباب أو علاجها</li>
+        <li>الاهتمام بالتغذية المناسبة</li>
+        <li>فيتامينات لتقوية الشعر: Pantogar, Hair Tone, Biotin</li>
+        <li>في حالة أنيميا: أقراص حديد (Ferrotron) مع الفيتامينات</li>
+        <li>شامبو مناسب لتساقط الشعر</li>
+        <li>لوسيون أو أمبولات للمناطق المتضررة تحديداً</li>
+      </ol>
+    </div>
+
+    <div class="card mt-16">
+      <h3>💊 الصلع الوراثي (Alopecia)</h3>
+      <p class="mb-10">ناتج عن هرمون الأندروجين. الأكثر شيوعاً عند الرجال. يحتاج علاجاً مدى الحياة.</p>
+      <div class="card border-purple">
+        <h3 class="persona-purple">Minoxidil — أهم قواعد الاستخدام</h3>
+        <ul>
+          <li>يساعد على نمو البصيلات الحية فقط</li>
+          <li>2% للرجال والنساء — 5% للرجال فقط</li>
+          <li>استخدام يومي الشهر الأول، ثم يوم بعد يوم، ثم مرتين أسبوعياً</li>
+          <li>يستمر مدى الحياة لتجنب التساقط المفرط عند التوقف</li>
+        </ul>
+        <div class="warning-note mt-10">
+          <strong>محظورات Minoxidil:</strong><br>
+          ❌ ممنوع أثناء الحمل والرضاعة<br>
+          ❌ ممنوع لا يلمس العين أو الفم أو الأنف<br>
+          ❌ ممنوع للأطفال<br>
+          ❌ لا يستخدم إذا كان هناك سبب آخر للتساقط لم يعالج<br>
+          ⚠️ مرضى القلب يراجعون الطبيب أولاً
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== DANDRUFF ===== -->
+  <div class="section" id="dandruff">
+    <div class="section-header">
+      <h2>❄️ قشرة الشعر</h2>
+      <p>الفرق بين القشرة الجافة والدهنية وعلاج كل منهما</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="two-cols">
+      <div class="card blue">
+        <h3>❄️ القشرة الجافة</h3>
+        <p>بسبب نقص إفراز الدهون</p>
+        <ul class="mt-8">
+          <li>بيضاء اللون</li>
+          <li>متطايرة على الرأس</li>
+          <li>حكة واحمرار</li>
+        </ul>
+        <h4>العلاج:</h4>
+        <ul>
+          <li>شامبو قشرة للقشرة الجافة</li>
+          <li>عمل حمام كريم بعد شامبو القشرة</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h3>💛 القشرة الدهنية</h3>
+        <p>بسبب زيادة إفراز الدهون</p>
+        <ul class="mt-8">
+          <li>لونها مائل للاصفرار</li>
+          <li>ملتصقة بالفروة</li>
+          <li>قد تظهر على الرموش والحواجب</li>
+          <li>حكة، احمرار، التهاب</li>
+        </ul>
+        <h4>العلاج:</h4>
+        <ul>
+          <li>شامبو يحتوي على Ketoconazole أو Selenium أو Sulfur</li>
+          <li>في الحالات الشديدة → طبيب لـ Oral Anti-fungal</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card mt-16">
+      <h3>⭐ نصائح مهمة للعميل</h3>
+      <ul>
+        <li>اغلب شامبوهات القشرة تسبب جفاف الشعر → عمل حمام كريم بعدها ضروري</li>
+        <li>تجنب استخدام الزيوت بكثرة حتى لا تزيد دهنية الفروة</li>
+        <li>استخدام سيروم للتمشيط بدل الكريمات الثقيلة</li>
+        <li>تقصير الشعر عند الرجال من أهم العوامل التي تساعد على اختفاء القشور</li>
+        <li>ترك رغوة شامبو القشرة 5 دقائق على الفروة قبل الشطف</li>
+      </ul>
+    </div>
+
+    <div class="card rose mt-16">
+      <h3>📋 أبرز أسباب القشرة</h3>
+      <div class="two-cols">
+        <ul>
+          <li>تغذية غير متوازنة</li>
+          <li>نقص فيتامين B</li>
+          <li>خلل هرموني</li>
+          <li>غسيل متكرر أو تسريح عنيف</li>
+          <li>الحرارة العالية من المجفف أو الماء الساخن</li>
+        </ul>
+        <ul>
+          <li>صبغات الشعر والتمليس الدائم</li>
+          <li>الإفراط في الجل والسبراي</li>
+          <li>ارتداء الحجاب لساعات دون تهوية</li>
+          <li>الطقس البارد المتقلب</li>
+          <li>القرب من الدورة الشهرية</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== KERATIN ===== -->
+  <div class="section" id="keratin">
+    <div class="section-header">
+      <h2>💎 الكيراتين والبروتين</h2>
+      <p>كل ما تحتاج معرفته للرد على أسئلة العملاء</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="card rose">
+      <h3>🔬 ما هو الكيراتين؟</h3>
+      <p>بروتين قوي يتكون من أحماض أمينية. هو المكون الأساسي في الشعر والجلد والأظافر. وجوده بكثرة يجعل الشعر ناعماً ولامعاً، وقلته تجعله مجعداً وجافاً.</p>
+    </div>
+
+    <div class="card gold mt-16">
+      <h3>✅ تأثير الكيراتين على الشعر</h3>
+      <ul>
+        <li>يعالج التقصف والهيشان</li>
+        <li>يعطي لمعة ونعومة ومظهراً صحياً</li>
+        <li>يفك الكسرات ويفرد الشعر</li>
+        <li>يقلل التساقط (لكنه لا يعالجه)</li>
+      </ul>
+    </div>
+
+    <div class="keratin-faq mt-20">
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">هل يمكن استخدام الشامبو العادي بعد الكيراتين؟ <span>▼</span></div>
+        <div class="kfaq-a">لا! الشامبو العادي يحتوي على كلوريد الصوديوم أو سلفات الصوديوم التي تفتح مسام الشعر فيخرج الكيراتين. يجب استخدام شامبو مخصص للشعر المعالج بالكيراتين خالٍ من هاتين المادتين. حتى شامبو جونسون للأطفال لا يصلح لأنه يحتوي على كلوريد الصوديوم.</div>
+      </div>
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">كم تستمر مدة الكيراتين؟ <span>▼</span></div>
+        <div class="kfaq-a">اغلب الأنواع تستمر 4-6 شهور. تقل المدة بسبب: استخدام شامبو غير مناسب، تعرض مفرط للشمس، الإفراط في الغسيل، صبغة الشعر بعد الكيراتين.</div>
+      </div>
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">هل يسبب الكيراتين تساقط الشعر؟ <span>▼</span></div>
+        <div class="kfaq-a">المواد الطبيعية لا تسبب التساقط. لكن قد يحدث تساقط بسبب: التطبيق الخاطئ، استخدام شامبو يحتوي على سلفات، التعرض لماء البحر أو حمامات السباحة، أو غسل الشعر مباشرة بعد التطبيق.</div>
+      </div>
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">هل يسمح بنزول البحر بعد الكيراتين؟ <span>▼</span></div>
+        <div class="kfaq-a">لا يفضل نهائياً لأن ملح البحر يكسر غلاف الشعر. في حالة النزول يجب: دهن الشعر بسيروم الكيراتين + لبس بونيه + غسل الشعر فوراً بعد الخروج.</div>
+      </div>
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">ما هو الفورمالين في الكيراتين وهل هو خطر؟ <span>▼</span></div>
+        <div class="kfaq-a">الفورمالين مادة حافظة توضع بنسب ضئيلة. النسبة المسموحة في المحاليل لا تزيد على 4%. الكيراتين الخالي من الفورمالين يكون مكتوباً عليه: Formaldehyde Free / Zero Formaldehyde / Organic / Biological. الكيراتين الذي يحتوي فورمالين يمكن التعرف عليه برائحته النفاذة القوية.</div>
+      </div>
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">ما الفرق بين الكيراتين والبروتين؟ <span>▼</span></div>
+        <div class="kfaq-a">علمياً لا يوجد فرق كبير. البروتين هو كيراتين مطور يضاف إليه بروتينات أخرى. الشعر الشديد الجفاف يحتاج كيراتين مع بروتين الكشمير. الشعر متوسط التجعيد يحتاج كيراتين مع بروتين القمح أو الأرز.</div>
+      </div>
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">ماذا يعني الرقم على منتجات الكيراتين (1-2-3-4)؟ <span>▼</span></div>
+        <div class="kfaq-a">Step 1 = شامبو قبل الكيراتين (لفتح المسام وتنظيف الشعر) | Step 2 = مستحضر الكيراتين للفرد | Step 3 = شامبو بعد الكيراتين (خالٍ من السلفات) | Step 4 = بلسم بعد الكيراتين</div>
+      </div>
+      <div class="kfaq-item">
+        <div class="kfaq-q" onclick="toggleKfaq(this)">ما الاحتياطات بعد جلسة الكيراتين؟ <span>▼</span></div>
+        <div class="kfaq-a">استخدام منتجات عناية مخصصة للكيراتين | عدم ربط الشعر أو استخدام كلبسات في أول يومين | تجنب الرياضة في أول يومين (عرق) | تجنب ماء البحر والسباحة</div>
+      </div>
+    </div>
+
+    <div class="card mt-20">
+      <h3>🏢 الأنواع المتاحة بالصيدلية</h3>
+      <div class="overflow-x-auto">
+        <table class="tbl-sm-mt">
+          <thead>
+            <tr class="card-dark-gradient">
+              <th class="p-10-12">الشركة</th>
+              <th class="p-10-12">النوع</th>
+              <th class="p-10-12">الفورمالين</th>
+              <th class="p-10-12">مناسب لـ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-soft"><td class="p-8-12-bold">GK Curly</td><td class="p-8-12">كيراتين</td><td class="p-8-12">2%</td><td class="p-8-12">شعر مجعد</td></tr>
+            <tr><td class="p-8-12-bold">GK Resistant</td><td class="p-8-12">كيراتين قوي</td><td class="p-8-12">4%</td><td class="p-8-12">شعر شديد التجعيد</td></tr>
+            <tr class="bg-soft"><td class="p-8-12-bold">GK The Best</td><td class="p-8-12">كيراتين + بروتين</td><td class="p-8-12">0%</td><td class="p-8-12">جميع أنواع الشعر</td></tr>
+            <tr><td class="p-8-12-bold">Unex</td><td class="p-8-12">بروتين</td><td class="p-8-12">0%</td><td class="p-8-12">الشعر الجاف والتالف</td></tr>
+            <tr class="bg-soft"><td class="p-8-12-bold">Amazon Keratin</td><td class="p-8-12">كيراتين متعدد</td><td class="p-8-12">حسب النوع</td><td class="p-8-12">Green Tea, Collagen, Apple, Grape</td></tr>
+            <tr><td class="p-8-12-bold">Chi Enviro Smoothing</td><td class="p-8-12">بروتين معالج</td><td class="p-8-12">0%</td><td class="p-8-12">الشعر العادي والمصبوغ</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VITAMINS ===== -->
+  <!-- ===== HAIR DYES EDUCATION ===== -->
+  <div class="section" id="hair_dyes_edu">
+    <div class="section-header">
+      <h2>🎨 الصبغات — دليل شامل</h2>
+      <p>كل ما تحتاج معرفته عن الصبغات قبل التوصية</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- أنواع الصبغات -->
+    <div class="card rose">
+      <h3>🔹 أنواع الصبغات</h3>
+      <div class="two-cols mt-12">
+        <div>
+          <h4>1️⃣ Permanent — دائمة</h4>
+          <p>بتخترق الشعرة وبتثبت فيها.</p>
+          <p>✔ أفضل اختيار لتغطية الشعر الأبيض.</p>
+        </div>
+        <div>
+          <h4>2️⃣ Semi-Permanent — نصف دائمة</h4>
+          <p>بتغلف الشعرة من الخارج. بتستمر لعدد غسلات معينة.</p>
+          <p>✔ مثال: L'Oréal Casting</p>
+        </div>
+      </div>
+      <div class="mt-12">
+        <h4>3️⃣ Temporary — مؤقتة</h4>
+        <p>لون سطحي بيختفي مع أول غسلة. مثال: The Hair Addict، بخاخات الألوان.</p>
+      </div>
+    </div>
+
+    <!-- نظام الأرقام -->
+    <div class="card gold mt-16">
+      <h3>🔢 نظام أرقام الصبغة</h3>
+      <p class="mb-10">الرقم بيتكوّن من جزئين:</p>
+      <div class="two-cols">
+        <div class="box-soft">
+          <div class="fw-800-rose-lg">الرقم قبل الفاصلة = اللون الأساسي</div>
+          <ul class="nav-sub-16">
+            <li>1 → أسود</li>
+            <li>3 → بني غامق</li>
+            <li>5 → بني فاتح</li>
+            <li>7 → أشقر</li>
+            <li>9 → أشقر فاتح جداً</li>
+          </ul>
+        </div>
+        <div class="box-soft">
+          <div class="fw-800-gold">الأرقام بعد الفاصلة = اللون الانعكاسي (Reflex)</div>
+          <ul class="nav-sub-16">
+            <li>1 → رمادي (Ash)</li>
+            <li>3 → ذهبي (Golden)</li>
+            <li>4 → نحاسي (Copper)</li>
+            <li>6 → أحمر (Red)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="info-note mt-12">
+        💡 <strong>مثال: 7.17</strong> — 7 = أشقر + 1 و7 = انعكاس رمادي على الأشقر.<br>
+        الألوان الانعكاسية بتقل مع الوقت واللي بيفضل هو اللون الأساسي.
+      </div>
+    </div>
+
+    <!-- الأوكسجين -->
+    <div class="card blue mt-16">
+      <h3>🧪 الأوكسجين (Developer)</h3>
+      <div class="three-cols mt-10">
+        <div class="box-soft-center">
+          <div class="h-xlg-blue">10 Vol</div>
+          <div class="text-muted-xs-b">3%</div>
+          <div class="text-sm-mt">تغميق اللون أو تونر</div>
+        </div>
+        <div class="box-rose">
+          <div class="h-xlg-rose">20 Vol</div>
+          <div class="text-muted-xs-b">6%</div>
+          <div class="text-sm-mt">الأكثر استخداماً — يغطي الشيب ويفتح 1-2 درجة</div>
+        </div>
+        <div class="box-gold">
+          <div class="h-xlg-gold">30 Vol</div>
+          <div class="text-muted-xs-b">9%</div>
+          <div class="text-sm-mt">يفتح 2-3 درجات</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- خطوات قبل الصبغة -->
+    <div class="card green mt-16">
+      <h3>✅ خطوات مهمة قبل الصبغة</h3>
+      <ul class="nav-sub-18">
+        <li>اغسل الشعر قبل الصبغة بـ 48 ساعة</li>
+        <li>اترك الصبغة 30 دقيقة (ماعدا Casting = 20 دقيقة)</li>
+        <li>الصبغة غالباً لا تفتح أو تغمق أكثر من درجتين</li>
+        <li>Patch Test 48 ساعة قبل الاستخدام</li>
+        <li>ضعي فازلين حول الجبهة والأذنين لمنع تصبغ الجلد</li>
+        <li>لا تستخدمي الصبغة فوق الحنة مباشرة — انتظري شهر على الأقل</li>
+      </ul>
+    </div>
+
+    <!-- Prodigy -->
+    <div class="card purple mt-16">
+      <h3>💎 L'Oréal Prodigy — معلومات خاصة</h3>
+      <ul class="nav-sub-18">
+        <li>✅ خالية من الأمونيا</li>
+        <li>✅ خالية من Resorcinol (ممكن يسبب تهيج)</li>
+        <li>✅ تحتوي على زيوت مثل زيت الأرجان</li>
+        <li>✅ تغطي الشعر الأبيض بنسبة تصل لـ 100%</li>
+        <li>💡 أثناء الصبغة: دلّك الشعر لتوزيعها جيداً</li>
+      </ul>
+    </div>
+
+    <!-- Casting -->
+    <div class="card border-gold-dk">
+      <h3 class="color-gold-dk">🌀 L'Oréal Casting — معلومات خاصة</h3>
+      <ul class="nav-sub-18">
+        <li>✅ بدون أمونيا</li>
+        <li>⏱️ وقت التأثير: 20 دقيقة فقط</li>
+        <li>📏 تفتح أو تغمق الشعر درجة واحدة فقط</li>
+        <li>🔄 تدوم حتى 28-32 غسلة ثم تختفي تدريجياً</li>
+      </ul>
+    </div>
+
+    <!-- ترشيح حسب الحالة -->
+    <div class="card rose mt-16">
+      <h3>👩‍⚕️ ترشيح الصبغة حسب حالة العميل</h3>
+      <div class="routine-steps mt-12">
+        <div class="routine-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">يريد تغطية الشيب بالكامل</div><div class="step-note">L'Oréal Excellence Crème | Garnier Color Naturals | Palette Intensive</div></div></div>
+        <div class="routine-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">شعره فيه بروتين أو كيراتين (بدون أمونيا)</div><div class="step-note">L'Oréal Prodigy | L'Oréal Casting Crème Gloss</div></div></div>
+        <div class="routine-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">فروة حساسة أو يفضل طبيعي</div><div class="step-note">Phyto Color Hair Dye | Manzanilla Oro Chamomile</div></div></div>
+        <div class="routine-step"><div class="step-num">4</div><div class="step-content"><div class="step-title">لون مؤقت (مناسبة أو يوم واحد)</div><div class="step-note">The Hair Addict Temp Tonz | بخاخات الألوان — بيزول مع أول غسلة</div></div></div>
+        <div class="routine-step"><div class="step-num">5</div><div class="step-content"><div class="step-title">حل سريع للجذور أو للرجالة</div><div class="step-note">Bigen Speedy (5 دقائق) | Bigen Powder (لا يحتاج أوكسجين)</div></div></div>
+      </div>
+    </div>
+
+    <div class="warning-note mt-16">⚠️ <strong>تذكر:</strong> الصبغة فوق الحنة مباشرة ممكن تسبب تفاعل وتخضر أو تتلف الشعر — انتظر شهر على الأقل.</div>
+
+  </div>
+
+  <div class="section" id="vitamins">
+    <div class="section-header">
+      <h2>💊 الفيتامينات والمعادن</h2>
+      <p>الفيتامينات الأساسية للبشرة والشعر مع الأدوية المقترحة</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="card rose mb-20">
+      <h3>🌟 للبشرة</h3>
+    </div>
+    <table class="vitamins-table">
+      <thead>
+        <tr>
+          <th>الفيتامين/المعدن</th>
+          <th>الوظيفة</th>
+          <th>الدواء المقترح</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="vit-name">Vit. C</span></td><td>مضاد أكسدة، يحمي من التجاعيد ويحفز الكولاجين</td><td><span class="drug-name">C-retard 500mg</span></td></tr>
+        <tr><td><span class="vit-name">Vit. E</span></td><td>يحمي من أشعة الشمس والتجاعيد، يزيد تكوين الكولاجين</td><td><span class="drug-name">Vit E 400mg</span></td></tr>
+        <tr><td><span class="vit-name">Omega 3</span></td><td>يحمي من الجفاف والتجاعيد</td><td><span class="drug-name">Omega 3 Plus</span></td></tr>
+        <tr><td><span class="vit-name">Vit. B Complex</span></td><td>يحمي من الجفاف والتجاعيد</td><td><span class="drug-name">Biotin Forte</span></td></tr>
+        <tr><td><span class="vit-name">Selenium</span></td><td>يحمي من أشعة الشمس والإصابة بسرطان الجلد</td><td><span class="drug-name">Selenium Ace</span></td></tr>
+        <tr><td><span class="vit-name">Zinc</span></td><td>عامل مساعد مهم في علاج الحبوب والشعر</td><td><span class="drug-name">Vita Zinc Cap</span></td></tr>
+        <tr><td><span class="vit-name">Co-Q10</span></td><td>يساعد على تجديد خلايا الجلد وحمايتها من التجاعيد</td><td><span class="drug-name">Co enzyme Q Tab.</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="card gold mt-24 mb-16">
+      <h3>💇 للشعر</h3>
+    </div>
+    <table class="vitamins-table mt-12">
+      <thead>
+        <tr>
+          <th>الفيتامين/المعدن</th>
+          <th>الوظيفة</th>
+          <th>الدواء المقترح</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="vit-name">Omega 3</span></td><td>يمنع جفاف الشعر وينشط الدورة الدموية في الفروة</td><td><span class="drug-name">Omega 3 Plus</span></td></tr>
+        <tr><td><span class="vit-name">Vit. C</span></td><td>مضاد أكسدة، مهم لتكوين الكولاجين وامتصاص الحديد</td><td><span class="drug-name">C-retard 500mg</span></td></tr>
+        <tr><td><span class="vit-name">Vit. E</span></td><td>مضاد أكسدة، يساعد على نمو الشعر</td><td><span class="drug-name">Vit E 400mg</span></td></tr>
+        <tr><td><span class="vit-name">Vit. B (Biotin)</span></td><td>مهم لنمو الشعر وحمايته من التساقط وزيادة طوله</td><td><span class="drug-name">Biotin Forte</span></td></tr>
+        <tr><td><span class="vit-name">Vit. D</span></td><td>نقصه يساعد على تساقط الشعر</td><td><span class="drug-name">V Drop</span></td></tr>
+        <tr><td><span class="vit-name">Zinc</span></td><td>مهم للحفاظ على نمو الشعر ومنع التساقط</td><td><span class="drug-name">Vita Zinc / Zinctron</span></td></tr>
+        <tr><td><span class="vit-name">Iron (حديد)</span></td><td>نقصه من أهم أسباب تساقط الشعر</td><td><span class="drug-name">Ferrotron / Ferroglobin</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-note mt-16">💡 <strong>مهم:</strong> العميل الذي يشتكي من تساقط الشعر يجب نصحه بعمل صورة دم كاملة ومخزون الحديد للتأكد من وجود أنيميا.</div>
+
+    <div class="card mt-16">
+      <h3>💊 أدوية متعددة الفيتامينات للشعر</h3>
+      <div class="three-cols">
+        <div class="box-soft-center">
+          <div class="fw-800-rose">Pantogar</div>
+          <div class="text-muted-sm">قرص 3 مرات يومياً بعد الأكل</div>
+        </div>
+        <div class="box-soft-center">
+          <div class="fw-800-rose">Hair Tone</div>
+          <div class="text-muted-sm">قرص مرتين يومياً بعد الأكل</div>
+        </div>
+        <div class="box-soft-center">
+          <div class="fw-800-rose">Nutrition for Hair</div>
+          <div class="text-muted-sm">قرص مرتين يومياً</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LIFESTYLE ===== -->
+  <div class="section" id="lifestyle">
+    <div class="section-header">
+      <h2>🌱 نمط الحياة للبشرة الصحية</h2>
+      <p>النصائح الذهبية التسعة للحفاظ على بشرة نضرة وصحية</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="lifestyle-grid">
+      <div class="lifestyle-item">
+        <div class="li-icon">💧</div>
+        <h4>8 أكواب ماء يومياً</h4>
+        <p>الترطيب الداخلي أساس صحة البشرة</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">🥗</div>
+        <h4>نظام غذائي صحي</h4>
+        <p>خضروات وفواكه طازجة يومياً</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">🚫</div>
+        <h4>تجنب الكافيين والغازيات</h4>
+        <p>استبدلها بعصائر طبيعية وشاي أخضر</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">🚭</div>
+        <h4>الابتعاد عن التدخين</h4>
+        <p>التدخين يسرع شيخوخة البشرة</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">☀️</div>
+        <h4>تجنب شمس الذروة</h4>
+        <p>واستخدام واقي الشمس دائماً</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">🏃</div>
+        <h4>ممارسة الرياضة</h4>
+        <p>تقلل التوتر الذي يسبب حب الشباب</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">😴</div>
+        <h4>8 ساعات نوم</h4>
+        <p>النوم الكافي ضروري لتجديد الخلايا</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">🚿</div>
+        <h4>ماء دافئ وليس ساخن</h4>
+        <p>الماء الساخن يجفف البشرة ويفتح المسام</p>
+      </div>
+      <div class="lifestyle-item">
+        <div class="li-icon">🧘</div>
+        <h4>تقليل التوتر</h4>
+        <p>التوتر يسبب ظهور الحبوب وتدهور البشرة</p>
+      </div>
+    </div>
+
+    <div class="card rose mt-20">
+      <h3>🔺 المثلث الذهبي للبشرة الصحية</h3>
+      <div class="three-cols mt-14">
+        <div class="box-soft-pad">
+          <div class="icon-lg">🌿</div>
+          <div class="fw-800-dark">نمط الحياة</div>
+          <div class="text-muted-xs">ماء، تغذية، نوم، رياضة، بدون تدخين</div>
+        </div>
+        <div class="box-soft-pad">
+          <div class="icon-lg">💊</div>
+          <div class="fw-800-dark">الفيتامينات</div>
+          <div class="text-muted-xs">Vit C, E, A, B، Selenium، Zinc، Omega 3</div>
+        </div>
+        <div class="box-soft-pad">
+          <div class="icon-lg">🧴</div>
+          <div class="fw-800-dark">روتين العناية</div>
+          <div class="text-muted-xs">غسول، مرطب، واقي شمس يومياً</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TRAINING SECTION ===== -->
+  <div class="section" id="training">
+    <div class="section-header">
+      <h2>🎓 التدريب التفاعلي</h2>
+      <p>سيناريوهات من الواقع — شخّص البشرة وأوصي بالمنتج الصح</p>
+      <div class="section-divider"></div>
+    </div>
+    <div id="training-content"></div>
+  </div>
+
+  <!-- ===== OFFERS CALCULATOR ===== -->
+  <div class="section" id="offers_calc">
+    <div class="section-header">
+      <h2>🏷️ حاسبة العروض</h2>
+      <p>احسب سعر العرض لكل قطعة وانسخ النتيجة للعميل فوراً</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="max-w-680">
+      <!-- نوع العرض -->
+      <div class="card-white-rose-mb">
+        <div class="text-muted-s-b">🏷️ اختار نوع العرض</div>
+        <select id="offerType" onchange="calcOffers()" class="input-select">
+          <option value="">-- اختر العرض --</option>
+          <optgroup label="🎁 اشتري وهدية">
+            <option value="1+1">1 + 1 مجاناً</option>
+            <option value="2+1">2 + 1 مجاناً</option>
+            <option value="2+2">2 + 2 مجاناً</option>
+          </optgroup>
+          <optgroup label="💸 خصم على الثانية">
+            <option value="1+30s">1 + خصم 30% على الثانية</option>
+            <option value="1+35s">1 + خصم 35% على الثانية</option>
+            <option value="1+40s">1 + خصم 40% على الثانية</option>
+            <option value="1+50s">1 + خصم 50% على الثانية</option>
+            <option value="1+70s">1 + خصم 70% على الثانية</option>
+            <option value="1+90s">1 + خصم 90% على الثانية</option>
+          </optgroup>
+          <optgroup label="🔖 خصم على القطعة">
+            <option value="d10">خصم 10% على القطعة</option>
+            <option value="d15">خصم 15% على القطعة</option>
+            <option value="d20">خصم 20% على القطعة</option>
+            <option value="d25">خصم 25% على القطعة</option>
+            <option value="d30">خصم 30% على القطعة</option>
+            <option value="d35">خصم 35% على القطعة</option>
+            <option value="d50">خصم 50% على القطعة</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <!-- الأسعار -->
+      <div class="card-white-gold-mb">
+        <div class="text-muted-s-b">💰 أسعار القطع (كل سعر في سطر منفصل)</div>
+        <textarea id="offerPrices" oninput="calcOffers()" placeholder="مثال:&#10;830&#10;730&#10;650" rows="5" class="input-pin"></textarea>
+      </div>
+
+      <!-- النتيجة -->
+      <div id="offerResult"></div>
+    </div>
+  </div>
+
+  <!-- ===== DYES SECTION ===== -->
+  <div class="section" id="prod_dyes"></div>
+  <div class="section" id="dyes_rec"></div>
+
+  <!-- ===== COMPARISON SECTION ===== -->
+  <div class="section" id="comparison"></div>
+
+  <!-- ===== TEAM NOTES SECTION ===== -->
+  <div class="section" id="team_notes">
+    <div class="section-header">
+      <h2>💬 ملاحظات الفريق</h2>
+      <p>اكتب ملاحظاتك أو أسئلتك لتطوير الموقع — هتتحفظ للكل</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- FORM -->
+    <div class="card-white-rose">
+      <div class="h-title-dark">✍️ إضافة ملاحظة جديدة</div>
+
+      <div class="grid-2-14">
+        <div>
+          <label class="text-label">الاسم</label>
+          <input id="note-name" type="text" placeholder="اسمك" class="input-standard" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+        <div>
+          <label class="text-label">مكان العمل</label>
+          <input id="note-workplace" type="text" placeholder="الفرع / القسم" class="input-standard" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+      </div>
+
+      <div class="mb-14">
+        <label class="text-label">نوع الملاحظة</label>
+        <div class="flex-wrap-gap">
+          <button type="button" onclick="setNoteTag(this,'ملاحظة عامة')" id="tag-general" class="note-tag-btn active">💬 ملاحظة عامة</button>
+          <button type="button" onclick="setNoteTag(this,'منتج جديد')" id="tag-product" class="note-tag-btn">📦 منتج جديد</button>
+          <button type="button" onclick="setNoteTag(this,'سؤال')" id="tag-question" class="note-tag-btn">❓ سؤال</button>
+        </div>
+        <input type="hidden" id="note-tag" value="ملاحظة عامة">
+      </div>
+
+      <div class="mb-16">
+        <label class="text-label">الملاحظة أو السؤال</label>
+        <textarea id="note-text" rows="4" placeholder="اكتب ملاحظتك هنا... لو منتج جديد: اكتب الاسم والكود والسعر والقسم" class="input-textarea" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+
+      <div class="flex-gap-12">
+        <button onclick="submitNote()" id="note-submit-btn" class="btn-rose-pill" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+          📤 إرسال
+        </button>
+        <div id="note-status" class="opacity-fade"></div>
+      </div>
+    </div>
+
+    <!-- NOTES LIST -->
+    <div class="card-white-plain">
+      <div class="flex-between-mb">
+        <div class="h-title-dark-sm">📋 الملاحظات المرسلة</div>
+        <button onclick="checkNotesPassword()" class="btn-filter-lg" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border)'">
+          🔒 عرض الملاحظات
+        </button>
+      </div>
+
+      <!-- Locked state -->
+      <div id="notes-locked" class="box-soft-large">
+        <div class="icon-xlg">🔒</div>
+        <div class="fw-700-dark">الملاحظات محمية</div>
+        <div class="text-sm mb-20">أدخل الباسورد لعرض الملاحظات</div>
+        <div class="flex-center-row">
+          <input id="notes-pw-input" type="password" placeholder="الباسورد" onkeydown="if(event.key==='Enter')checkNotesPassword()" class="input-otp" onfocus="this.style.borderColor='var(--rose)'" onblur="this.style.borderColor='var(--border)'">
+          <button onclick="checkNotesPassword()" class="btn-rose-sm">دخول</button>
+        </div>
+        <div id="notes-pw-error" class="text-muted-sm-rose">❌ باسورد غلط</div>
+      </div>
+
+      <!-- Unlocked state -->
+      <div id="notes-unlocked" class="nav-menu-hidden">
+        <div class="flex-end-mb">
+          <button onclick="loadNotes()" class="btn-filter" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border)'">🔄 تحديث</button>
+          <button onclick="lockNotes()" class="btn-filter" onmouseover="this.style.borderColor='var(--rose)'" onmouseout="this.style.borderColor='var(--border)'">🔒 قفل</button>
+        </div>
+        <div id="notes-list">
+          <div class="text-muted-pad">⏳ جاري التحميل...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- RECOMMENDER SECTION - static HTML -->
+<div class="section" id="recommender"></div>
+
+<!-- ===== EYE RECOMMENDER SECTION ===== -->
+<div class="section" id="eye_rec"></div>
+
+<!-- ===== ACNE RECOMMENDER SECTION ===== -->
+<div class="section" id="acne_rec"></div>
+
+<!-- ===== ANTI-AGING RECOMMENDER SECTION ===== -->
+<div class="section" id="antiaging_rec"></div>
+
+</div><!-- end main -->
+
+<!-- ===== PRODUCT SECTIONS ===== -->
+
+
+<!-- ===== PRODUCT SECTIONS IN MAIN ===== -->
+
+
+<!-- ===== SMART RECOMMENDER SECTION ===== -->
+
+</body>
+</html>
+
+  <!--
+    ترتيب التحميل مهم جداً:
+    1. utils   — دوال مشتركة (copyToClipboard، renderPrecautions، إلخ)
+    2. auth    — الباسورد والـ session
+    3. navigation — السايدبار، التنقل، التبويبات، التشخيص
+    4. products — تحميل البيانات وعرض المنتجات
+    5. recommenders — كل المرشحات الذكية
+    6. dyes    — الصبغات + البحث العام
+    7. notes   — نظام الملاحظات
+    8. tools   — التدريب + المقارنة + حاسبة العروض
+  -->
+  <script src="assets/js/core/DataLayer.js"></script>
+  <script src="assets/js/core/AppState.js"></script>
+  <script src="assets/js/core/NavigationController.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/navigation.js"></script>
+  <script src="assets/js/products.js"></script>
+  <script src="assets/js/engine.js"></script>
+  <script src="assets/js/recommenders.js"></script>
+  <script src="assets/js/dyes.js"></script>
+  <script src="assets/js/notes.js"></script>
+  <script src="assets/js/tools.js"></script>
+</body>
+</html>
