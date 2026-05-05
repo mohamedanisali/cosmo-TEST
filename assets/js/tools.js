@@ -723,3 +723,102 @@ if (typeof module !== 'undefined' && module.exports) {
     calculateOffers
   };
 }
+
+// ============================================================
+// ===== PRODUCT COMPARISON — initComparison =====
+// ============================================================
+
+window.initComparison = function initComparison() {
+  var section = document.getElementById('comparison');
+  if (!section) return;
+
+  // Only build once
+  if (section.dataset.built === '1') return;
+  section.dataset.built = '1';
+
+  // Load products data
+  var allProds = [];
+  if (typeof AppState !== 'undefined') {
+    var pd = AppState.getData ? AppState.getData('products') : null;
+    if (pd) {
+      Object.keys(pd).forEach(function(cat) {
+        var catData = pd[cat];
+        Object.keys(catData).forEach(function(skin) {
+          (catData[skin] || []).forEach(function(p) {
+            allProds.push(Object.assign({}, p, { _cat: cat, _skin: skin }));
+          });
+        });
+      });
+    }
+  }
+
+  section.innerHTML = `
+    <div class="section-header">
+      <h2>⚖️ مقارنة المنتجات</h2>
+      <p class="section-subtitle">اختر منتجين لمقارنتهما جنباً إلى جنب</p>
+    </div>
+
+    <div class="comparison-selects" style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:200px;">
+        <label style="display:block;font-weight:bold;margin-bottom:6px;">المنتج الأول</label>
+        <select id="comp-sel-a" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;font-size:0.95rem;" onchange="renderComparison()">
+          <option value="">— اختر —</option>
+          ${allProds.map((p,i)=>`<option value="${i}">${p.name}</option>`).join('')}
+        </select>
+      </div>
+      <div style="flex:1;min-width:200px;">
+        <label style="display:block;font-weight:bold;margin-bottom:6px;">المنتج الثاني</label>
+        <select id="comp-sel-b" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;font-size:0.95rem;" onchange="renderComparison()">
+          <option value="">— اختر —</option>
+          ${allProds.map((p,i)=>`<option value="${i}">${p.name}</option>`).join('')}
+        </select>
+      </div>
+    </div>
+    <div id="comp-result"></div>
+  `;
+
+  // Store products list for renderComparison
+  window._comparisonProds = allProds;
+};
+
+window.renderComparison = function renderComparison() {
+  var prods = window._comparisonProds || [];
+  var selA  = document.getElementById('comp-sel-a');
+  var selB  = document.getElementById('comp-sel-b');
+  var result= document.getElementById('comp-result');
+  if (!selA || !selB || !result) return;
+
+  var idxA = selA.value;
+  var idxB = selB.value;
+
+  if (idxA === '' || idxB === '') {
+    result.innerHTML = '<p style="color:#888;text-align:center;">اختر منتجين لتبدأ المقارنة</p>';
+    return;
+  }
+
+  var a = prods[idxA];
+  var b = prods[idxB];
+
+  var catLabels = { cleansers:'غسول', toners:'تونر', moisturizers:'مرطب', sunscreens:'واقي شمس',
+    acne:'حبوب', whitening:'تفتيح', eye:'محيط العين', wrinkles:'مضاد تقدم السن',
+    hair_products:'شعر', special:'خاص', masks:'ماسك', scrubs:'مقشر' };
+
+  function card(p) {
+    return `<div style="flex:1;background:#fff;border-radius:12px;border:1px solid #e0e0e0;padding:20px;min-width:200px;">
+      <div style="font-size:1.1rem;font-weight:bold;color:#c41e5b;margin-bottom:10px;">${p.name}</div>
+      <div style="margin-bottom:6px;"><span style="color:#888">النوع:</span> <strong>${p.type||'—'}</strong></div>
+      <div style="margin-bottom:6px;"><span style="color:#888">للاستخدام:</span> <strong>${p.use||'—'}</strong></div>
+      <div style="margin-bottom:6px;"><span style="color:#888">الفئة:</span> <strong>${catLabels[p._cat]||p._cat}</strong></div>
+      <div style="margin-bottom:6px;"><span style="color:#888">البشرة:</span> <strong>${p._skin||'—'}</strong></div>
+      <div style="margin-top:12px;padding:10px;background:#fafafa;border-radius:8px;font-size:0.9rem;color:#555;">${p.note||''}</div>
+    </div>`;
+  }
+
+  result.innerHTML = `
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;">
+      ${card(a)}
+      <div style="display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:bold;color:#c41e5b;">VS</div>
+      ${card(b)}
+    </div>
+  `;
+};
